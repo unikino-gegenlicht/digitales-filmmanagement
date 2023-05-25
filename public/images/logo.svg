@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+        width="1840"
+        height="384"
+        version="1.1"
+        viewBox="0 -960 36800 7680"
+        id="svg3980"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns="http://www.w3.org/2000/svg"
+>
+  <defs
+     id="defs3970">
+    <linearGradient
+       id="linearGradient995"
+       x1="8198.2041"
+       x2="36134.23"
+       y1="2880"
+       y2="2880"
+       gradientTransform="matrix(8.6148425,0,0,9.0455846,-295.12435,7402.7923)"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="pad">
+      <stop
+         stop-color="#fd0"
+         offset="0"
+         id="stop3960" />
+      <stop
+         stop-color="#ccb000"
+         offset="1"
+         id="stop3962" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1007"
+       x1="394.06299"
+       x2="7285.9399"
+       y1="2880"
+       y2="2880"
+       gradientTransform="matrix(8.6148425,0,0,9.0455846,-295.12435,7402.7923)"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect">
+      <stop
+         stop-color="#ccb000"
+         offset="0"
+         id="stop3965" />
+      <stop
+         stop-color="#fd0"
+         offset="1"
+         id="stop3967" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient1007"
+       id="linearGradient4504"
+       x1="394.06299"
+       y1="2880"
+       x2="7285.9399"
+       y2="2880"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#linearGradient995"
+       id="linearGradient4508"
+       x1="8198.2041"
+       y1="2880"
+       x2="36134.23"
+       y2="2880"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <path
+     d="m7285.937 5809.046h-2756.75v172.297q0 213.217-151.837 365.054t-365.054 151.837h-3101.342q-213.217 0-365.054-151.837t-151.837-365.054v-5513.499q0-213.217 151.837-365.054 151.836-151.836 365.054-151.836h516.891v-344.594q0-146.452 99.071-245.523t245.523-99.071h1378.375q146.452 0 245.523 99.071t99.071 245.523v344.594h516.891q213.217 0 365.054 151.837t151.837 365.054v172.297h2756.75zm-4307.421-1033.781h516.891v-516.891h-516.89zm0-2584.453h516.891v-516.891h-516.89zm1378.374 2584.453h516.891v-516.891h-516.891zm0-2584.453h516.891v-516.891h-516.891zm1378.375 2584.453h516.89v-516.891h-516.89zm0-2584.453h516.89v-516.891h-516.89z"
+     fill="url(#linearGradient1007)"
+     id="path3972"
+     style="fill-opacity:1;fill:url(#linearGradient4504)" />
+  <text
+     x="22073.562"
+     y="1705.3333"
+     fill="url(#linearGradient995)"
+     font-family="'Open Sans'"
+     font-size="3216.2px"
+     font-weight="bold"
+     stroke-width="16.7511"
+     text-anchor="middle"
+     xml:space="preserve"
+     id="text3978"
+     style="fill-opacity:1;fill:url(#linearGradient4508)"><tspan
+       x="22073.562"
+       y="1705.3333"
+       id="tspan3974"
+       style="fill-opacity:1;fill:url(#linearGradient4508)">Digitales</tspan><tspan
+       x="22073.562"
+       y="5725.583"
+       id="tspan3976"
+       style="fill-opacity:1;fill:url(#linearGradient4508)">Filmmanagement</tspan></text>
+</svg>
