@@ -10,7 +10,9 @@
         <div class="hero is-dark is-fullheight is-fullwidth">
             <div class="hero-head">
                 <div class="is-fullwidth has-text-centered pt-2">
-                    <img class="image is-inline-block" style="width: 50vw;" src="https://raw.githubusercontent.com/unikino-gegenlicht/digitales-filmmanagement/main/public/images/logo.svg">
+                    <object style="width: 50vw;" type="image/svg+xml" data="img/logo.svg">
+                        <img src="img/logo.svg"/>
+                    </object>
 
                 </div>
             </div>
@@ -19,7 +21,12 @@
                     <p class="title">Authentifizierung erforderlich</p>
                     <p class="subtitle">Bitte melde dich über den konfiguierten Provider an.</p>
                     <!-- Der Login wird über ein gesonderted Popup Fenster behandelt.-->
-                    <a href="#login" class="button is-primary is-fullwidth">Login via {{OIDC_AUTHORITY_HOST}}</a>
+                    <a href="/" class="button is-primary is-fullwidth">Login via {{OIDC_AUTHORITY_HOST}}</a>
+                </div>
+            </div>
+            <div class="hero-foot">
+                <div class="is-fullwidth">
+                    <p class="has-text-primary has-text-centered">&copy; Jan Eike Suchard</p>
                 </div>
             </div>
         </div>
