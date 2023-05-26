@@ -39,7 +39,7 @@ below:
     serve .
     ```
 
-The mockups should now be available via [localhost:3000](https://localhost:3000)
+The mockups should now be available via [localhost:3000](http://localhost:3000)
 
 ## 📝 License
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
