@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/mockup.css">
+    <script src="js/basic.js"></script>
+    <title>🎞️ Filme</title>
+</head>
+
+<body class="has-navbar-fixed-top">
+    <nav class="navbar is-dark is-fixed-top is-fullwidth" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <div class="navbar-item">
+                <object style="max-height: 1.75rem;" type="image/svg+xml" data="img/logo.svg">
+                    <img src="img/logo.svg" />
+                </object>
+            </div>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" onclick="toggleMenu()">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="mainNavigation">
+            <div class="navbar-start has-text-centered">
+                <div class="navbar-item is-hidden-desktop has-text-centered">
+                    <div class="columns is-mobile">
+                        <div class="column is-2">
+                            <figure class="image is-flex is-fullwidth">
+                                <img class="is-rounded is-flex no-navbar-filter" src="https://picsum.photos/200/200">
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <p class="has-text-left">
+                                <span class="has-text-weight-bold" style="white-space: nowrap;">Demo Nutzer</span>
+                                &dash;
+                                @alfred
+                            </p>
+                            <a href="/login.html" class="button is-small is-danger is-fullwidth">
+                                Logout
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="is-hidden-desktop" style="margin: 0.125rem 0;" />
+                <a class="navbar-item" href="/index.html">
+                    <span>🏠</span>Übersicht
+                </a>
+                <a class="navbar-item has-text-primary" href="/movies.html">
+                    <span>🎞️</span>Filme
+                </a>
+                <a class="navbar-item" href="/components.html">
+                    <span>🧩</span>Komponenten
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item is-hidden-touch">
+                    <div class="dropdown is-right is-hoverable">
+                        <div class="dropdown-trigger">
+                            <div class="buttons is-centered">
+                                <div class="button is-rounded"
+                                    style="background-image: url('https://picsum.photos/200'); background-size: cover;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-content">
+                                <div class="dropdown-item has-text-centered">
+                                    <p class="icon-text has-text-weight-bold is-flex-wrap-nowrap">
+                                        <span style="white-space: nowrap;">Demo Nutzer</span>
+                                    <p>@alfred</p>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item has-text-centered pr-5" href="/login.html">
+                                    <span class="has-text-danger has-text-weight-bold">Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </nav>
+    <div class="container ml-2 mr-2 mt-3">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Der Film 1
+                </p>
+            </header>
+            <div class="card-content p-0 m-0">
+                <figure class="image">
+                    <img class="is-movie-poster" src="https://picsum.photos/600/900">
+                </figure>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="card-footer-item">Infos</a>
+                <a href="#" class="card-footer-item">Bearbeiten</a>
+                <a href="#" class="card-footer-item has-text-danger">Löschen</a>
+            </div>
+        </div>
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Der andere Film
+                </p>
+            </header>
+            <div class="card-content p-0 m-0">
+                <figure class="image">
+                    <img class="is-movie-poster" src="https://picsum.photos/600/901">
+                </figure>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="card-footer-item">Infos</a>
+                <a href="#" class="card-footer-item">Bearbeiten</a>
+                <a href="#" class="card-footer-item has-text-danger">Löschen</a>
+            </div>
+        </div>
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Der dritte Film
+                </p>
+            </header>
+            <div class="card-content p-0 m-0">
+                <figure class="image">
+                    <img class="is-movie-poster" src="https://picsum.photos/601/901">
+                </figure>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="card-footer-item">Infos</a>
+                <a href="#" class="card-footer-item">Bearbeiten</a>
+                <a href="#" class="card-footer-item has-text-danger">Löschen</a>
+            </div>
+        </div>
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Der noch andere Film
+                </p>
+            </header>
+            <div class="card-content p-0 m-0">
+                <figure class="image">
+                    <img class="is-movie-poster" src="https://picsum.photos/700/901">
+                </figure>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="card-footer-item">Infos</a>
+                <a href="#" class="card-footer-item">Bearbeiten</a>
+                <a href="#" class="card-footer-item has-text-danger">Löschen</a>
+            </div>
+        </div>
+    </div>
+</body>

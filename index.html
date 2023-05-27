@@ -1,74 +1,102 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/mockup.css">
-        <title>🏠 Übersicht</title>
-    </head>
-    <body>
-        <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <div class="navbar-item">
-                    <object style="max-height: 1.75rem;" type="image/svg+xml" data="img/logo.svg">
-                        <img src="img/logo.svg"/>
-                    </object>
-                </div>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                  </a>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" href="css/mockup.css">
+    <script src="js/basic.js"></script>
+    <title>🏠 Übersicht</title>
+</head>
+<body class="has-navbar-fixed-top">
+    <nav class="navbar is-dark is-fixed-top is-fullwidth" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <div class="navbar-item">
+                <object style="max-height: 1.75rem;" type="image/svg+xml" data="img/logo.svg">
+                    <img src="img/logo.svg" />
+                </object>
             </div>
-            <div class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item has-text-primary">
-                        <span>🏠</span>Übersicht
-                    </a>
-                    <a class="navbar-item" href="/components.html">
-                        <span>🧩</span>Komponenten
-                    </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" onclick="toggleMenu()">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="mainNavigation">
+            <div class="navbar-start has-text-centered">
+                <div class="navbar-item is-hidden-desktop has-text-centered">
+                    <div class="columns is-mobile">
+                        <div class="column is-2">
+                            <figure class="image is-flex is-fullwidth">
+                                <img class="is-rounded is-flex no-navbar-filter" src="https://picsum.photos/200/200">
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <p class="has-text-left">
+                                <span class="has-text-weight-bold" style="white-space: nowrap;">Demo Nutzer</span>
+                                &dash;
+                                @alfred
+                            </p>
+                            <a href="/login.html" class="button is-small is-danger is-fullwidth">
+                                Logout
+                            </a>
+                        </div>
+                        
+                    </div>
                 </div>
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="dropdown is-right is-hoverable">
-                            <div class="dropdown-trigger">
-                                <div class="buttons">
-                                    <div class="button is-rounded" style="background-image: url('https://picsum.photos/200'); background-size: cover;">
-                                    </div>
+                <hr class="is-hidden-desktop" style="margin: 0.125rem 0;"/>
+                <a class="navbar-item has-text-primary" href="/index.html">
+                    <span>🏠</span>Übersicht
+                </a>
+                <a class="navbar-item" href="/movies.html">
+                    <span>🎞️</span>Filme
+                </a>
+                <a class="navbar-item" href="/components.html">
+                    <span>🧩</span>Komponenten
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item is-hidden-touch">
+                    <div class="dropdown is-right is-hoverable">
+                        <div class="dropdown-trigger">
+                            <div class="buttons is-centered">
+                                <div class="button is-rounded"
+                                    style="background-image: url('https://picsum.photos/200'); background-size: cover;">
                                 </div>
                             </div>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-content">
-                                    <div class="dropdown-item has-text-centered">
-                                        <p class="icon-text has-text-weight-bold is-flex-wrap-nowrap">
-                                            <span style="white-space: nowrap;">Demo Nutzer</span>
-                                            <p>@alfred</p>
-                                        </div>
-                                        <hr class="dropdown-divider">
-                                        <a class="dropdown-item has-text-centered pr-5" href="/login.html">
-                                            <span class="has-text-danger has-text-weight-bold">Logout</span>
-                                        </a>
-                                    </div>
+                        </div>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-content">
+                                <div class="dropdown-item has-text-centered">
+                                    <p class="icon-text has-text-weight-bold is-flex-wrap-nowrap">
+                                        <span style="white-space: nowrap;">Demo Nutzer</span>
+                                    <p>@alfred</p>
                                 </div>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item has-text-centered pr-5" href="/login.html">
+                                    <span class="has-text-danger has-text-weight-bold">Logout</span>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
-        </nav>
-        <div class="columns is-halfheight">
-            <div class="column is-three-quarters-desktop">
-                <div class="box" id="unfinished">
-                    <h5 class="is-size-5">Nicht abgerechnete Filme</h5>
-                    <div class="list">                     
-                        <div class="list-item">
-                            <div class="list-item-image">
-                                <figure class="image">
-                                    <img class="is-movie-poster" src="https://picsum.photos/200/300" style="aspect-ratio: 5/7;">
-                                  </figure>
-                              </div>
-                          <div class="list-item-content">
+        </div>
+        </div>
+    </nav>
+    <div class="columns is-halfheight is-mobile">
+        <div class="column is-three-quarters-desktop">
+            <div class="box" id="unfinished">
+                <h5 class="is-size-5">Nicht abgerechnete Filme</h5>
+                <div class="list">
+                    <div class="list-item">
+                        <div class="list-item-image">
+                            <figure class="image">
+                                <img class="is-movie-poster in-list" src="https://picsum.photos/200/300"
+                                    style="aspect-ratio: 5/7;">
+                            </figure>
+                        </div>
+                        <div class="list-item-content">
                             <div class="list-item-title">
                                 Film 1
                                 <span class="tag is-mplc-license is-rounded">MPLC-Lizenz</span>
@@ -78,15 +106,15 @@
                             <div class="list-item-description">
                                 <span class="has-text-weight-semibold">Vorfürdatum: 01.01.2023</span>
                             </div>
-                          </div>
                         </div>
-                        <div class="list-item">
-                            <div class="list-item-image">
-                                <figure class="image">
-                                  <img class="is-movie-poster" src="https://picsum.photos/200/300">
-                                </figure>
-                              </div>
-                          <div class="list-item-content">
+                    </div>
+                    <div class="list-item">
+                        <div class="list-item-image">
+                            <figure class="image">
+                                <img class="is-movie-poster in-list" src="https://picsum.photos/200/300">
+                            </figure>
+                        </div>
+                        <div class="list-item-content">
                             <div class="list-item-title">
                                 Film 2
                                 <span class="tag is-mplc-license is-rounded">MPLC-Lizenz</span>
@@ -95,93 +123,94 @@
                             <div class="list-item-description">
                                 <span class="has-text-weight-semibold">Vorfürdatum: 30.04.2023</span>
                             </div>
-                          </div>
                         </div>
-                        <div class="list-item">
-                            <div class="list-item-image">
-                                <figure class="image">
-                                  <img class="is-movie-poster" src="https://picsum.photos/200/300">
-                                </figure>
-                              </div>
-                          <div class="list-item-content">
+                    </div>
+                    <div class="list-item">
+                        <div class="list-item-image">
+                            <figure class="image">
+                                <img class="is-movie-poster in-list" src="https://picsum.photos/200/300">
+                            </figure>
+                        </div>
+                        <div class="list-item-content">
                             <div class="list-item-title">
                                 Film 3
                             </div>
                             <div class="list-item-description">
                                 <span class="has-text-weight-semibold">Vorfürdatum: 15.05.2023</span>
                             </div>
-                          </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
-                
             </div>
-            <div class="colum is-one-quarter-desktop">
 
-            </div>
         </div>
-        <div class="columns is-halfheight">
-            <div class="column is-three-quarters-desktop">
-                <div class="box" id="nextMovies">
-                    <h5 class="is-size-5">Nächste Filme</h5>
-                    <div class="list">                     
-                        <div class="list-item">
-                            <div class="list-item-image">
-                                <figure class="image">
-                                    <img class="is-movie-poster" src="https://picsum.photos/200/300">
-                                  </figure>
-                              </div>
-                          <div class="list-item-content">
+        <div class="colum is-one-quarter-desktop">
+
+        </div>
+    </div>
+    <div class="columns is-halfheight is-mobile">
+        <div class="column is-three-quarters-desktop">
+            <div class="box" id="nextMovies">
+                <h5 class="is-size-5">Nächste Filme</h5>
+                <div class="list">
+                    <div class="list-item">
+                        <div class="list-item-image">
+                            <figure class="image">
+                                <img class="is-movie-poster in-list" src="https://picsum.photos/200/300">
+                            </figure>
+                        </div>
+                        <div class="list-item-content">
                             <div class="list-item-title">
                                 Kommender Film 1
                                 <span class="tag is-info is-rounded">Mit Vorfilm</span>
                                 <span class="tag is-rounded is-cooperation">Kooperation mit: {{COOP_PARTNER}}</span>
                             </div>
                             <div class="list-item-description">
-                               Vorfürdatum: 01.01.2023
+                                Vorfürdatum: 01.01.2023
                             </div>
-                          </div>
                         </div>
-                        <div class="list-item">
-                            <div class="list-item-image">
-                                <figure class="image">
-                                    <img class="is-movie-poster" src="https://picsum.photos/200/300">
-                                  </figure>
-                              </div>
-                          <div class="list-item-content">
+                    </div>
+                    <div class="list-item">
+                        <div class="list-item-image">
+                            <figure class="image">
+                                <img class="is-movie-poster in-list" src="https://picsum.photos/200/300">
+                            </figure>
+                        </div>
+                        <div class="list-item-content">
                             <div class="list-item-title">
                                 Kommender Film 2
                                 <span class="tag is-rounded is-non-reservable">Reservierung gesperrt</span>
-                                
+
                             </div>
                             <div class="list-item-description">
-                               Vorfürdatum: 01.01.2023
+                                Vorfürdatum: 01.01.2023
                             </div>
-                          </div>
                         </div>
-                        <div class="list-item">
-                            <div class="list-item-image">
-                                <figure class="image">
-                                    <img class="is-movie-poster" src="https://picsum.photos/200/300">
-                                  </figure>
-                              </div>
-                          <div class="list-item-content">
+                    </div>
+                    <div class="list-item">
+                        <div class="list-item-image">
+                            <figure class="image">
+                                <img class="is-movie-poster in-list" src="https://picsum.photos/200/300">
+                            </figure>
+                        </div>
+                        <div class="list-item-content">
                             <div class="list-item-title">
                                 Kommender Film 3
                                 <span class="tag is-rounded is-mplc-license">MPLC-Lizenz</span>
-                                
+
                             </div>
                             <div class="list-item-description">
-                               Vorfürdatum: 01.01.2023
+                                Vorfürdatum: 01.01.2023
                             </div>
-                          </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
-            <div class="colum is-one-quarter-desktop">
-
-            </div>
         </div>
-    </body>
+        <div class="colum is-one-quarter-desktop">
+
+        </div>
+    </div>
+</body>
+
 </html>

@@ -1,12 +1,18 @@
 lockfileVersion: '6.0'
 
 devDependencies:
+  '@creativebulma/bulma-tooltip':
+    specifier: ^1.2.0
+    version: 1.2.0
   bulma:
     specifier: ^0.9.4
     version: 0.9.4
   bulma-list:
     specifier: ^1.2.0
     version: 1.2.0
+  remixicon:
+    specifier: ^3.3.0
+    version: 3.3.0
   sass:
     specifier: ^1.62.1
     version: 1.62.1
@@ -15,6 +21,10 @@ devDependencies:
     version: 14.2.0
 
 packages:
+
+  /@creativebulma/bulma-tooltip@1.2.0:
+    resolution: {integrity: sha512-ooImbeXEBxf77cttbzA7X5rC5aAWm9UsXIGViFOnsqB+6M944GkB28S5R4UWRqjFd2iW4zGEkEifAU+q43pt2w==}
+    dev: true
 
   /@zeit/schemas@2.29.0:
     resolution: {integrity: sha512-g5QiLIfbg3pLuYUJPlisNKY+epQJTcMDsOnVNkscrDP1oi7vmJnzOANYJI/1pZcVJ6umUkBv3aFtlg1UvUHGzA==}
@@ -531,6 +541,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       rc: 1.2.8
+    dev: true
+
+  /remixicon@3.3.0:
+    resolution: {integrity: sha512-iNeRbwVgd8Ef467IjMd/+joFWSBOYfqsLtxtSzsS8fWn75a1H7sgGu5uWE4c3NLjP2C1giFlx8gw63qZd96yJQ==}
     dev: true
 
   /require-from-string@2.0.2:

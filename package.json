@@ -4,8 +4,10 @@
 		"start": "serve ."
 	},
 	"devDependencies": {
+		"@creativebulma/bulma-tooltip": "^1.2.0",
 		"bulma": "^0.9.4",
 		"bulma-list": "^1.2.0",
+		"remixicon": "^3.3.0",
 		"sass": "^1.62.1",
 		"serve": "^14.2.0"
 	}

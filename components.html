@@ -1,41 +1,77 @@
 <!DOCTYPE html>
-<html class="has-navbar-fixed-top">
+<html>
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="css/mockup.css">
+    <script src="js/basic.js"></script>
     <title>🧩 Komponenten</title>
 </head>
 
-<body>
-    <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+<body class="has-navbar-fixed-top">
+    <nav class="navbar is-dark is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <div class="navbar-item">
                 <object style="max-height: 1.75rem;" type="image/svg+xml" data="img/logo.svg">
                     <img src="img/logo.svg" />
                 </object>
             </div>
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" onclick="toggleMenu()">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
             </a>
         </div>
-        <div class="navbar-menu">
-            <div class="navbar-start">
+        <div class="navbar-menu" id="mainNavigation">
+            <div class="navbar-start has-text-centered">
+                <div class="navbar-item is-hidden-desktop has-text-centered">
+                    <div class="columns is-narrow is-mobile">
+                        <div class="column is-2">
+                            <figure class="image is-flex is-fullwidth">
+                                <img class="is-rounded is-flex no-navbar-filter" src="https://picsum.photos/200/200">
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <p class="has-text-left">
+                                <span class="has-text-weight-bold" style="white-space: nowrap;">Demo Nutzer</span>
+                                &dash;
+                                @alfred
+                            </p>
+                            <a href="/login.html" class="button is-small is-danger is-fullwidth">
+                                Logout
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="is-hidden-desktop" style="margin: 0.125rem 0;" />
                 <a class="navbar-item" href="/index.html">
                     <span>🏠</span>Übersicht
                 </a>
-                <a class="navbar-item has-text-primary" href="/components.html">
-                    <span>🧩</span>Komponenten
+                <a class="navbar-item" href="/movies.html">
+                    <span>🎞️</span>Filme
                 </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link has-text-primary">
+                        <span>🧩</span>Komponenten
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="/components.html#tags">
+                            Tags
+                        </a>
+                        <a class="navbar-item" href="/components.html#tooltips">
+                            Tooltips
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="navbar-end">
-                <div class="navbar-item">
+                <div class="navbar-item is-hidden-touch">
                     <div class="dropdown is-right is-hoverable">
                         <div class="dropdown-trigger">
-                            <div class="buttons">
+                            <div class="buttons is-centered">
                                 <div class="button is-rounded"
                                     style="background-image: url('https://picsum.photos/200'); background-size: cover;">
                                 </div>
@@ -56,196 +92,200 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         </div>
     </nav>
-    <div class="columns p-1 is-hidden-touch is-fullheight">
-        <div class="column is-one-fifth-desktop">
-            <aside class="menu p-1 stick">
-                <p class="menu-label">
-                    General
-                </p>
-                <ul class="menu-list">
-                    <li><a href="#tags">Tags</a></li>
-                </ul>
-            </aside>
-        </div>
-        <div class="column is-four-fifths-desktop is-inline-block">
-            <div class="box" id="tags">
-                <h3 class="is-size-3 has-text-centered">Tags</h3>
-                <span>
-                    Dieses Projekt verwendet Tags um die Visualisierung
-                    von zusätzlichen Informationen zu vereinfachen. Im
-                    Folgenden werden die Tags vorgestellt und ihre
-                    Bedeutungen erklärt. Es werden nicht alle Tags in jeder
-                    Ansicht angezeigt.
-                </span>
-                <hr>
-                <div class="mt-1">
-                    <div class="field is-grouped is-grouped-multiline">
-                        <div class="control">
-                            <div class="tags has-addons are-medium">
-                                <span class="tag is-dark is-rounded">Lizenz</span>
-                                <span class="tag is-danger is-rounded">Nicht vorhanden</span>
-                            </div>
-                        </div>
-                        <div class="control">
-                            <div class="tags has-addons are-medium">
-                                <span class="tag is-dark is-rounded">Lizenz</span>
-                                <span class="tag is-license-unclear is-rounded">In Absprache</span>
-                            </div>
-                        </div>
-                        <div class="control">
-                            <div class="tags has-addons are-medium">
-                                <span class="tag is-dark is-rounded">Lizenz</span>
-                                <span class="tag is-license-mplc is-rounded">MPLC</span>
-                            </div>
-                        </div>
-                        <div class="control">
-                            <div class="tags has-addons are-medium">
-                                <span class="tag is-dark is-rounded">Lizenz</span>
-                                <span class="tag is-warning is-rounded">Ohne Werbung</span>
-                            </div>
-                        </div>
-                        <div class="control">
-                            <div class="tags has-addons are-medium">
-                                <span class="tag is-dark is-rounded">Lizenz</span>
-                                <span class="tag is-success is-rounded">Mit Werbung</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p>
-                        Dieser Tag zeigt die aktuell vorhandene Lizenz/den aktuellen Stand der Anfrage
-                        der Lizen an.
-                    </p>
-                </div>
-
-                <hr>
-                <div class="mt-1">
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Kooperationspartner</span>
-                            <span class="tag is-cooperation is-rounded">{{Name des Partners}}</span>
-                        </div>
-                    </div>
-                    <p>
-                        Dieser Tag zeigt, ob der Film im Rahmen einer Kooperation gezeigt wird und
-                        wer der Kooperationspartner ist.
-                    </p>
-                </div>
-                <hr>
-                <div class="field is-grouped is-grouped-multiline">
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Reservierungsstatus</span>
-                            <span class="tag is-danger is-rounded">Gesperrt</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Reservierungsstatus</span>
-                            <span class="tag is-warning is-rounded">Ausgebucht</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Reservierungsstatus</span>
-                            <span class="tag is-success is-rounded">Verfügbar</span>
-                        </div>
+    <div class="box" id="tags">
+        <h3 class="is-size-3 has-text-centered">Tags</h3>
+        <span>
+            Dieses Projekt verwendet Tags um die Visualisierung
+            von zusätzlichen Informationen zu vereinfachen. Im
+            Folgenden werden die Tags vorgestellt und ihre
+            Bedeutungen erklärt. Es werden nicht alle Tags in jeder
+            Ansicht angezeigt.
+        </span>
+        <hr>
+        <div class="m-1">
+            <div class="field is-grouped is-grouped-multiline">
+                <div class="control">
+                    <div class="tags has-addons are-medium">
+                        <span class="tag is-dark is-rounded">Lizenz</span>
+                        <span class="tag is-danger is-rounded">Nicht vorhanden</span>
                     </div>
                 </div>
-                <p>
-                    Dieser Tag zeigt an, ob für den Film Sitzplätze reserviert werden können,
-                    und ob noch Plätze reservierbar sind.
-                </p>
-                <hr>
-                <div class="field is-grouped is-grouped-multiline">
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Sonderprogramm</span>
-                            <span class="tag is-primary is-rounded">{{ProgrammName}}</span>
-                        </div>
+                <div class="control">
+                    <div class="tags has-addons are-medium">
+                        <span class="tag is-dark is-rounded">Lizenz</span>
+                        <span class="tag is-license-unclear is-rounded">In Absprache</span>
                     </div>
                 </div>
-                <p>
-                    Dieser Tag zeigt an, ob der Film in einem Sonderprogramm gezeigt wird und falls ja, in welchem.
-                </p>
-                <hr>
-                <div class="field is-grouped is-grouped-multiline">
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Abrechnungsstatus</span>
-                            <span class="tag is-danger is-rounded">Überfällig</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Abrechnungsstatus</span>
-                            <span class="tag is-warning is-rounded">Wartet</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Abrechnungsstatus</span>
-                            <span class="tag is-success is-rounded">Abgerechnet</span>
-                        </div>
+                <div class="control">
+                    <div class="tags has-addons are-medium">
+                        <span class="tag is-dark is-rounded">Lizenz</span>
+                        <span class="tag is-license-mplc is-rounded">MPLC</span>
                     </div>
                 </div>
-                <p>
-                    Dieser Tag zeigt an, wie der Aktuelle Abrechnungsstatus des Filmes ist. Überfällig sind Filme, die
-                    innerhalb von 2 Wochen nach dem Vorführungsdatum nicht abgerechnet wurden.
-                </p>
-                <hr>
-                <div class="field is-grouped is-grouped-multiline">
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Medienstatus</span>
-                            <span class="tag is-danger is-rounded">Muss bestellt werden</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Medienstatus</span>
-                            <span class="tag is-media-ordered is-rounded">Bestellt</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Medienstatus</span>
-                            <span class="tag is-media-provided is-rounded">Wird gestellt</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Medienstatus</span>
-                            <span class="tag is-info is-rounded">Erhalten</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Medienstatus</span>
-                            <span class="tag is-warning is-rounded">Gerippt</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Medienstatus</span>
-                            <span class="tag is-success is-rounded">Auf Vorführungs-PC</span>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <div class="tags has-addons are-medium">
-                            <span class="tag is-dark is-rounded">Medienstatus</span>
-                            <span class="tag is-light is-rounded">Archiviert</span>
-                        </div>
+                <div class="control">
+                    <div class="tags has-addons are-medium">
+                        <span class="tag is-dark is-rounded">Lizenz</span>
+                        <span class="tag is-warning is-rounded">Ohne Werbung</span>
                     </div>
                 </div>
-                <p>
-                    Dieser Tag zeigt an, wie der aktelle Medienstatus des Filmes ist.
-                </p>
+                <div class="control">
+                    <div class="tags has-addons are-medium">
+                        <span class="tag is-dark is-rounded">Lizenz</span>
+                        <span class="tag is-success is-rounded">Mit Werbung</span>
+                    </div>
+                </div>
             </div>
+            <p>
+                Dieser Tag zeigt die aktuell vorhandene Lizenz/den aktuellen Stand der Anfrage
+                der Lizen an.
+            </p>
+        </div>
 
+        <hr>
+        <div class="mt-1">
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Kooperationspartner</span>
+                    <span class="tag is-cooperation is-rounded">{{Name des Partners}}</span>
+                </div>
+            </div>
+            <p>
+                Dieser Tag zeigt, ob der Film im Rahmen einer Kooperation gezeigt wird und
+                wer der Kooperationspartner ist.
+            </p>
+        </div>
+        <hr>
+        <div class="field is-grouped is-grouped-multiline">
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Reservierungsstatus</span>
+                    <span class="tag is-danger is-rounded">Gesperrt</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Reservierungsstatus</span>
+                    <span class="tag is-warning is-rounded">Ausgebucht</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Reservierungsstatus</span>
+                    <span class="tag is-success is-rounded">Verfügbar</span>
+                </div>
+            </div>
+        </div>
+        <p>
+            Dieser Tag zeigt an, ob für den Film Sitzplätze reserviert werden können,
+            und ob noch Plätze reservierbar sind.
+        </p>
+        <hr>
+        <div class="field is-grouped is-grouped-multiline">
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Sonderprogramm</span>
+                    <span class="tag is-primary is-rounded">{{ProgrammName}}</span>
+                </div>
+            </div>
+        </div>
+        <p>
+            Dieser Tag zeigt an, ob der Film in einem Sonderprogramm gezeigt wird und falls ja, in welchem.
+        </p>
+        <hr>
+        <div class="field is-grouped is-grouped-multiline">
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Abrechnungsstatus</span>
+                    <span class="tag is-danger is-rounded">Überfällig</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Abrechnungsstatus</span>
+                    <span class="tag is-warning is-rounded">Wartet</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Abrechnungsstatus</span>
+                    <span class="tag is-success is-rounded">Abgerechnet</span>
+                </div>
+            </div>
+        </div>
+        <p>
+            Dieser Tag zeigt an, wie der Aktuelle Abrechnungsstatus des Filmes ist. Überfällig sind Filme, die
+            innerhalb von 2 Wochen nach dem Vorführungsdatum nicht abgerechnet wurden.
+        </p>
+        <hr>
+        <div class="field is-grouped is-grouped-multiline">
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Medienstatus</span>
+                    <span class="tag is-danger is-rounded">Muss bestellt werden</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Medienstatus</span>
+                    <span class="tag is-media-ordered is-rounded">Bestellt</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Medienstatus</span>
+                    <span class="tag is-media-provided is-rounded">Wird gestellt</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Medienstatus</span>
+                    <span class="tag is-info is-rounded">Erhalten</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Medienstatus</span>
+                    <span class="tag is-warning is-rounded">Gerippt</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Medienstatus</span>
+                    <span class="tag is-success is-rounded">Auf Vorführungs-PC</span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons are-medium">
+                    <span class="tag is-dark is-rounded">Medienstatus</span>
+                    <span class="tag is-light is-rounded">Archiviert</span>
+                </div>
+            </div>
+        </div>
+        <p>
+            Dieser Tag zeigt an, wie der aktelle Medienstatus des Filmes ist.
+        </p>
+    </div>
+    <div class="box" id="tooltips">
+        <h3 class="is-size-3 has-text-centered">Tooltips</h3>
+        <p>Tooltips werden verwendet, um zusätzliche Informationen über
+            Tags und sonstige Inhalte bereitzustellen.</p>
+
+        <p class="is-size-5 has-text-centered">Beispiele</p>
+        <hr>
+        <div class="mt-1">
+            Informationen zu Tags
+            <div>
+                <span class="tags has-addons">
+                    <span class="tag is-dark is-rounded">Abrechnungsstatus</span>
+                    <span class="tag is-success is-rounded has-tooltip-arrow"
+                        data-tooltip="Abgerechnet von: Alfred">Abgerechnet</span>
+                </span>
+            </div>
         </div>
     </div>
 </body>
