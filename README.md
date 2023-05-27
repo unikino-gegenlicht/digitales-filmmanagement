@@ -22,11 +22,7 @@ The application is written in [TypeScript](https://www.typescriptlang.org/) and 
 To use the mockup in a more efficient manner you can follow the steps listed
 below:
 1. Install a current version of [Node.js](https://nodejs.org)
-2. Install the `serve` package on your machine via `npm`
-    ```bash
-    npm install -g serve
-    ```
-3. Clone the repository to your machine
+2. Clone the repository to your machine
     ```bash
     git clone https://github.com/unikino-gegenlicht/digitales-filmmanagement.git
     ```
@@ -34,9 +30,16 @@ below:
     ```bash
     git checkout mockups
     ```
-4. Serve the repository and it's files with `serve`
+3. Install the needed packages for the mockup via `pnmp`
     ```bash
-    serve .
+    # (optional, if not already installed) install pnpm
+    npm install -g pnpm
+    # Install the needed packages
+    pnpm install
+    ```
+4. Startup the mockup
+    ```bash
+    npm start
     ```
 
 The mockups should now be available via [localhost:3000](http://localhost:3000)
