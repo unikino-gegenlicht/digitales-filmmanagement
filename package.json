@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"prestart": "sass css/theme.scss css/mockup.scss",
+		"prestart": "sass scss/theme.scss css/mockup.css",
 		"start": "serve ."
 	},
 	"devDependencies": {
