@@ -3,5 +3,48 @@ $gglBlack: #000;
 
 $primary: $gglYellow;
 
+.image .is-movie-poster {
+    aspect-ratio: 5/7;
+    max-height: 64px;
+}
+
+.tag:not(body).is-license-mplc {
+    background-color: hotpink;
+    color: white;
+}
+
+.tag:not(body).is-cooperation {
+    background-color: blueviolet;
+    color: white;
+}
+
+.tag:not(body).is-license-unclear {
+    background-color: lightsalmon;
+    color: white;
+}
+
+.tag:not(body).is-media-ordered {
+    background-color: darkorange;
+    color: white;
+}
+
+.tag:not(body).is-media-provided {
+    background-color: violet;
+    color: white;
+}
+
+
+.menu.stick {
+    position: sticky;
+    display: inline-block;
+    vertical-align: top;
+    max-height: 100vh;
+    overflow-y: auto;
+    width: 200px;
+    top: 0;
+    bottom: 0;
+    padding: 30px;
+}
+
 @import "../node_modules/bulma/bulma.sass";
 @import "../node_modules/bulma-list/sass/bulma-list.sass";

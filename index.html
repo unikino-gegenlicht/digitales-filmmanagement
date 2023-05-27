@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/mockup.css">
-        <title>Übersicht</title>
+        <title>🏠 Übersicht</title>
     </head>
     <body>
         <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
@@ -24,6 +24,9 @@
                 <div class="navbar-start">
                     <a class="navbar-item has-text-primary">
                         <span>🏠</span>Übersicht
+                    </a>
+                    <a class="navbar-item" href="/components.html">
+                        <span>🧩</span>Komponenten
                     </a>
                 </div>
                 <div class="navbar-end">
@@ -54,6 +57,131 @@
                 </div>
             </div>
         </nav>
-        
+        <div class="columns is-halfheight">
+            <div class="column is-three-quarters-desktop">
+                <div class="box" id="unfinished">
+                    <h5 class="is-size-5">Nicht abgerechnete Filme</h5>
+                    <div class="list">                     
+                        <div class="list-item">
+                            <div class="list-item-image">
+                                <figure class="image">
+                                    <img class="is-movie-poster" src="https://picsum.photos/200/300" style="aspect-ratio: 5/7;">
+                                  </figure>
+                              </div>
+                          <div class="list-item-content">
+                            <div class="list-item-title">
+                                Film 1
+                                <span class="tag is-mplc-license is-rounded">MPLC-Lizenz</span>
+                                <span class="tag is-primary is-rounded">Sonderprogramm</span>
+                                <span class="tag is-danger is-rounded">Überfällig</span>
+                            </div>
+                            <div class="list-item-description">
+                                <span class="has-text-weight-semibold">Vorfürdatum: 01.01.2023</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-image">
+                                <figure class="image">
+                                  <img class="is-movie-poster" src="https://picsum.photos/200/300">
+                                </figure>
+                              </div>
+                          <div class="list-item-content">
+                            <div class="list-item-title">
+                                Film 2
+                                <span class="tag is-mplc-license is-rounded">MPLC-Lizenz</span>
+                                <span class="tag is-primary is-rounded">Sonderprogramm</span>
+                            </div>
+                            <div class="list-item-description">
+                                <span class="has-text-weight-semibold">Vorfürdatum: 30.04.2023</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-image">
+                                <figure class="image">
+                                  <img class="is-movie-poster" src="https://picsum.photos/200/300">
+                                </figure>
+                              </div>
+                          <div class="list-item-content">
+                            <div class="list-item-title">
+                                Film 3
+                            </div>
+                            <div class="list-item-description">
+                                <span class="has-text-weight-semibold">Vorfürdatum: 15.05.2023</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                
+            </div>
+            <div class="colum is-one-quarter-desktop">
+
+            </div>
+        </div>
+        <div class="columns is-halfheight">
+            <div class="column is-three-quarters-desktop">
+                <div class="box" id="nextMovies">
+                    <h5 class="is-size-5">Nächste Filme</h5>
+                    <div class="list">                     
+                        <div class="list-item">
+                            <div class="list-item-image">
+                                <figure class="image">
+                                    <img class="is-movie-poster" src="https://picsum.photos/200/300">
+                                  </figure>
+                              </div>
+                          <div class="list-item-content">
+                            <div class="list-item-title">
+                                Kommender Film 1
+                                <span class="tag is-info is-rounded">Mit Vorfilm</span>
+                                <span class="tag is-rounded is-cooperation">Kooperation mit: {{COOP_PARTNER}}</span>
+                            </div>
+                            <div class="list-item-description">
+                               Vorfürdatum: 01.01.2023
+                            </div>
+                          </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-image">
+                                <figure class="image">
+                                    <img class="is-movie-poster" src="https://picsum.photos/200/300">
+                                  </figure>
+                              </div>
+                          <div class="list-item-content">
+                            <div class="list-item-title">
+                                Kommender Film 2
+                                <span class="tag is-rounded is-non-reservable">Reservierung gesperrt</span>
+                                
+                            </div>
+                            <div class="list-item-description">
+                               Vorfürdatum: 01.01.2023
+                            </div>
+                          </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-image">
+                                <figure class="image">
+                                    <img class="is-movie-poster" src="https://picsum.photos/200/300">
+                                  </figure>
+                              </div>
+                          <div class="list-item-content">
+                            <div class="list-item-title">
+                                Kommender Film 3
+                                <span class="tag is-rounded is-mplc-license">MPLC-Lizenz</span>
+                                
+                            </div>
+                            <div class="list-item-description">
+                               Vorfürdatum: 01.01.2023
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="colum is-one-quarter-desktop">
+
+            </div>
+        </div>
     </body>
 </html>
