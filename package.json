@@ -1,0 +1,12 @@
+{
+	"scripts": {
+		"prestart": "sass css/theme.scss css/mockup.scss",
+		"start": "serve ."
+	},
+	"devDependencies": {
+		"bulma": "^0.9.4",
+		"bulma-list": "^1.2.0",
+		"sass": "^1.62.1",
+		"serve": "^14.2.0"
+	}
+}
