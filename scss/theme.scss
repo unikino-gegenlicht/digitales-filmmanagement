@@ -46,18 +46,18 @@ $primary: $gglYellow;
     top: 0;
     bottom: 0;
 }
-.container{
+.container.is-card-list{
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
 	gap: 0.5em;
 }
 
+.button.is-fullheight {
+    height: 100% !important;
+}
+
 .card{
 	height: max-content;
-    border-radius: 25px;
-    border-color: $gglYellow;
-    border-width: 2px;
-    border-style: dotted;
 }
 
 img.no-navbar-filter {

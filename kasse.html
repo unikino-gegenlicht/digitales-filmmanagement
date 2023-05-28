@@ -49,10 +49,10 @@
                 <a class="navbar-item" href="/index.html">
                     <span>🏠</span>Übersicht
                 </a>
-                <a class="navbar-item has-text-primary" href="/movies.html">
+                <a class="navbar-item" href="/movies.html">
                     <span>🎞️</span>Filme
                 </a>
-                <a class="navbar-item" href="/kasse.html">
+                <a class="navbar-item has-text-primary" href="/kassenbuch.html">
                     <span>💶</span> Kasse
                 </a>
                 <a class="navbar-item" href="/components.html">
@@ -89,74 +89,67 @@
         </div>
         </div>
     </nav>
-    <div class="container is-card-list ml-2 mr-2 mt-3">
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">
-                    Der Film 1
-                </p>
-            </header>
-            <div class="card-content p-0 m-0">
-                <figure class="image">
-                    <img class="is-movie-poster" src="https://picsum.photos/600/900">
-                </figure>
-            </div>
-            <div class="card-footer">
-                <a href="#" class="card-footer-item">Infos</a>
-                <a href="#" class="card-footer-item">Bearbeiten</a>
-                <a href="#" class="card-footer-item has-text-danger">Löschen</a>
-            </div>
+    <div class="content mt-2 mx-2">
+        <div class="buttons has-addons is-centered">
+            <button class="button is-primary is-rounded has-tooltip-info has-tooltip-arrow has-tooltip-bottom" data-tooltip="Öffnet ein Popup mit den Reserverungen und übernimmt auf klick die Anzahl der Tickets">Reservierungen</button>
+            <button class="button is-info is-rounded has-tooltip-arrow has-tooltip-bottom" data-tooltip="Zeigt die heutigen Statistiken an">📊 Statistiken</button>
         </div>
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">
-                    Der andere Film
-                </p>
-            </header>
-            <div class="card-content p-0 m-0">
-                <figure class="image">
-                    <img class="is-movie-poster" src="https://picsum.photos/600/901">
-                </figure>
+        <div class="box">
+            <h4 class="is-size-4 has-text-centered mb-3">Kasse</h4>
+            <div class="tile is-ancestor">
+                <div class="tile is-vertical is-4 p-1" style="height: 10vh;">
+                    <button class="button is-link is-rounded is-fullwidth is-fullheight">🍾 Getränk</button>
+
+                </div>
+                <div class="tile is-4 is-vertical p-1" style="height: 10vh;">
+                    <button class="button is-link is-rounded is-fullwidth is-fullheight">🍿 Popcorn</button>
+                </div>
+                <div class="tile is-2 is-vertical p-1" style="height: 10vh;">
+                    <button class="button is-link is-rounded is-fullwidth is-fullheight">🎟️ Eintritt</button>
+                </div>
+                <div class="tile is-2 is-vertical p-1" style="height: 10vh;">
+                    <button class="button is-link is-rounded is-fullwidth is-fullheight has-tooltip-arrow has-tooltip-danger" data-tooltip="Nur bei Filmen im Double Feature sichtbar">🎟️ Eintritt (Double Feature)</button>
+                </div>
             </div>
-            <div class="card-footer">
-                <a href="#" class="card-footer-item">Infos</a>
-                <a href="#" class="card-footer-item">Bearbeiten</a>
-                <a href="#" class="card-footer-item has-text-danger">Löschen</a>
+            <hr>
+            <h5 class="is-size-5 has-text-centered">Bon</h5>
+            <div class="list is-fullwidth" style="overflow: none;">
+                <div class=" list-item">
+                    <div class="list-item-content">
+                        <div class="list-item-title">Getränke</div>
+                        <div class="list-item-description">Anzahl: {{CALCED}}</div>
+                        <div class="list-item-controls">
+                            <div class="button is-danger">
+                                -1
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-item-content">
+                        <div class="list-item-title">Popcorn</div>
+                        <div class="list-item-description">Anzahl: {{CALCED}}</div>
+                        <div class="list-item-controls">
+                            <div class="button is-danger">
+                                -1
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-item-content">
+                        <div class="list-item-title">Tickets</div>
+                        <div class="list-item-description">Anzahl: {{CALCED}}, <span class="has-tooltip-arrow" data-tooltip="nur sichtbar bei Double-Features"> davon {{CALCED}} für das Double Feature</span></div>
+                        <div class="list-item-controls">
+                            <div class="button is-danger">
+                                -1
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <hr>
+            <button class="button is-success is-medium is-fullwidth" data-tooltip="Sendet eine Anfrage im Hintergrund an die API und speichert den Umsatz">🤑Bezahlt🤑</button>
         </div>
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">
-                    Der dritte Film
-                </p>
-            </header>
-            <div class="card-content p-0 m-0">
-                <figure class="image">
-                    <img class="is-movie-poster" src="https://picsum.photos/601/901">
-                </figure>
-            </div>
-            <div class="card-footer">
-                <a href="#" class="card-footer-item">Infos</a>
-                <a href="#" class="card-footer-item">Bearbeiten</a>
-                <a href="#" class="card-footer-item has-text-danger">Löschen</a>
-            </div>
-        </div>
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">
-                    Der noch andere Film
-                </p>
-            </header>
-            <div class="card-content p-0 m-0">
-                <figure class="image">
-                    <img class="is-movie-poster" src="https://picsum.photos/700/901">
-                </figure>
-            </div>
-            <div class="card-footer">
-                <a href="#" class="card-footer-item">Infos</a>
-                <a href="#" class="card-footer-item">Bearbeiten</a>
-                <a href="#" class="card-footer-item has-text-danger">Löschen</a>
-            </div>
-        </div>
-    </div>
+        
 </body>
