@@ -26,6 +26,20 @@ dependencies:
     specifier: ^4.9.5
     version: 4.9.5
 
+devDependencies:
+  '@creativebulma/bulma-tooltip':
+    specifier: ^1.2.0
+    version: 1.2.0
+  bulma:
+    specifier: ^0.9.4
+    version: 0.9.4
+  bulma-list:
+    specifier: ^1.2.0
+    version: 1.2.0
+  remixicon:
+    specifier: ^3.3.0
+    version: 3.3.0
+
 packages:
 
   /@alloc/quick-lru@5.2.0:
@@ -1536,6 +1550,10 @@ packages:
   /@bcoe/v8-coverage@0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: false
+
+  /@creativebulma/bulma-tooltip@1.2.0:
+    resolution: {integrity: sha512-ooImbeXEBxf77cttbzA7X5rC5aAWm9UsXIGViFOnsqB+6M944GkB28S5R4UWRqjFd2iW4zGEkEifAU+q43pt2w==}
+    dev: true
 
   /@csstools/normalize.css@12.0.0:
     resolution: {integrity: sha512-M0qqxAcwCsIVfpFQSlGN5XjXWu8l5JDZN+fPt1LeW5SZexQTgnaEvgXAY+CeygRw0EeppWHi12JxESWiWrB0Sg==}
@@ -3467,6 +3485,14 @@ packages:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
     engines: {node: '>=6'}
     dev: false
+
+  /bulma-list@1.2.0:
+    resolution: {integrity: sha512-hOEVB32dtDyhXS+IqAt1TyRgZFjUTQ2RNXDG7MbvVokjMVeURDIDalGFO8UwjfkpjFMKQzJTlD/rdi3oDtdaHg==}
+    dev: true
+
+  /bulma@0.9.4:
+    resolution: {integrity: sha512-86FlT5+1GrsgKbPLRRY7cGDg8fsJiP/jzTqXXVqiUZZ2aZT8uemEOHlU1CDU+TxklPEZ11HZNNWclRBBecP4CQ==}
+    dev: true
 
   /bytes@3.0.0:
     resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
@@ -8588,6 +8614,10 @@ packages:
     resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
     engines: {node: '>= 0.10'}
     dev: false
+
+  /remixicon@3.3.0:
+    resolution: {integrity: sha512-iNeRbwVgd8Ef467IjMd/+joFWSBOYfqsLtxtSzsS8fWn75a1H7sgGu5uWE4c3NLjP2C1giFlx8gw63qZd96yJQ==}
+    dev: true
 
   /renderkid@3.0.0:
     resolution: {integrity: sha512-q/7VIQA8lmM1hF+jn+sFSPWGlMkSAeNYcPLmDQx2zzuiDfaLrOmumR8iaUKlenFgh0XRPIUeSPlH3A+AW3Z5pg==}
