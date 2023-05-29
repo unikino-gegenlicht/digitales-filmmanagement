@@ -1,0 +1,94 @@
+@import "~bulma/sass/utilities/functions.sass";
+// Overwrite the default primary color of bulma with the corporate design
+// yellow
+$gglYellow: #ffdd00;
+$primary: $gglYellow;
+
+/* Other brand colors */
+
+// MPLC Deutschland GmbH
+$mplcBlue: #096587;
+$mplcBlue-invert: findColorInvert($mplcBlue);
+
+// Create a image format which is applied to images displaying movie posters
+.image.is-movie-poster,
+.image.is-5by7 {
+  aspect-ratio: 5/7;
+}
+
+// modifying bulma container grid to display multiple cards in a row for better
+// display of movie list
+.container.is-card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+  gap: 0.5em;
+}
+
+// always making a bulma container take up the full width
+.container {
+  max-width: none !important;
+  width: 100%;
+}
+
+// allowing the bulma container to also work on touch class devices on bulma
+@media screen and (min-width: 1024px) {
+  .container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+// let a button reach it's full height
+.button.is-fullheight {
+  height: 100% !important;
+}
+
+// let a card only be as high as the contained content
+.card {
+  height: max-content;
+}
+
+/* Custom tag colors */
+
+// Color for tags referencing the MPLC Deutschland GmbH
+.tag:not(body).is-license-mplc {
+  background-color: $mplcBlue;
+  color: $mplcBlue-invert;
+}
+
+// Color for tags referencing a cooperation with an external partner
+.tag:not(body).is-cooperation {
+  background-color: blueviolet;
+  color: findColorInvert(blueViolet);
+}
+
+// Color for tags with an unknown screening license status
+.tag:not(body).is-license-unclear {
+  background-color: lightsalmon;
+  color: findColorInvert(lightsalmon);
+}
+
+// Color for tags showing that the media from which the movie is played has
+// been ordered
+.tag:not(body).is-media-ordered {
+  background-color: darkorange;
+  color: findColorInvert(darkorange);
+}
+
+// Color for tags showing that the media from which the movie is played will be
+// provided by the licensor
+.tag:not(body).is-media-provided {
+  background-color: violet;
+  color: findColorInvert(violet);
+}
+
+// import the rest of the bulma css framework
+@import "~bulma/bulma.sass";
+// import the bulma dark mode extension
+@import "~bulma-prefers-dark/bulma-prefers-dark.sass";
+// import the bulma list extension
+@import "~bulma-list/sass/bulma-list.sass";
+// import the bulma tooltip extension
+@import "@creativebulma/bulma-tooltip/src/sass/index.sass";
+// import the remix icon icon pack
+@import "~remixicon/fonts/remixicon.css";
