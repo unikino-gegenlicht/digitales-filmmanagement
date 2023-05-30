@@ -7,6 +7,7 @@ import {User} from "oidc-client-ts";
 import env from "./env"
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {LoginPage} from "./pages/login/login";
+import {LoginCallback} from "./pages/login/callback";
 
 const oidcConfig = {
     authority: env.OIDC_AUTHORITY,
@@ -32,6 +33,7 @@ root.render(
         <Router>
             <Routes>
                 <Route path={"/"} element={<BaseApp />}/>
+                <Route path={"/callback"} element={<LoginCallback />}/>
                 <Route path={"/login"} element={<LoginPage />}/>
             </Routes>
         </Router>
