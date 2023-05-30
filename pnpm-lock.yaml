@@ -13,6 +13,9 @@ dependencies:
   '@types/react-dom':
     specifier: ^18.2.4
     version: 18.2.4
+  oidc-client-ts:
+    specifier: ^2.2.4
+    version: 2.2.4
   react:
     specifier: ^18.2.0
     version: 18.2.0
