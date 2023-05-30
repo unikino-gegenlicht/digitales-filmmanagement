@@ -4,6 +4,7 @@ import './App.scss';
 import {Button} from "react-bulma-components";
 import {AuthContextProps, withAuth} from "react-oidc-context";
 import {Navigate} from "react-router-dom";
+import Navigation from "./components/navbar/navbar";
 
 class BaseApp extends Component<any, any> {
     render() {
@@ -17,8 +18,9 @@ class BaseApp extends Component<any, any> {
         // now check if the user is authenticated
         if (auth.isAuthenticated) {
             return (
-                <div className={"content"}>
-                    <h2 className={"title is-size-1 has-text-centered has-text-primary"}>Digitales Filmmanagement</h2>
+                    <div className={"content"}>
+                        <Navigation/>
+                        <h2 className={"title is-size-1 has-text-centered has-text-primary"}>Digitales Filmmanagement</h2>
                     <div className={"box m-3"}>
                         <p>Hier entsteht aktuell das digitale Filmmanagement des Unikinos GEGENLICHT</p>
                         <p className={"has-text-info has-text-centered is-size-5"}>
