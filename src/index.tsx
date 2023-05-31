@@ -8,6 +8,8 @@ import env from "./env"
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {LoginPage} from "./pages/login/login";
 import {LoginCallback} from "./pages/login/callback";
+import CashRegister from "./pages/cashRegister/cashRegister";
+import {RegisterItem} from "./pages/cashRegister/types";
 
 const oidcConfig = {
     authority: env.OIDC_AUTHORITY,
@@ -28,11 +30,39 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 
+let registerItems: RegisterItem[] = [
+    {
+        name: "Eintritt",
+        icon: "🎟️",
+        price: 3.00,
+        buttonColor: "success"
+    },
+    {
+        name: "Double Feature",
+        icon: "🎟️",
+        price: 5.00,
+        buttonColor: "success"
+    },
+    {
+        name: "Popcorn",
+        icon: "🍿",
+        price: 1.00,
+        buttonColor: "warning"
+    },
+    {
+        name: "Getränk",
+        icon: "🍾",
+        price: 1.00,
+        buttonColor: "warning"
+    }
+]
+
 root.render(
     <AuthProvider {...oidcConfig}>
         <Router>
             <Routes>
                 <Route path={"/"} element={<BaseApp />}/>
+                <Route path={"/cashRegister"} element={<CashRegister items={registerItems} />}/>
                 <Route path={"/callback"} element={<LoginCallback />}/>
                 <Route path={"/login"} element={<LoginPage />}/>
             </Routes>
