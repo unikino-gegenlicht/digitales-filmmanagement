@@ -1,28 +1,58 @@
-import {Button, Navbar} from "react-bulma-components";
+import React, {Fragment} from 'react';
+import {Button, Columns, Image, Navbar} from "react-bulma-components";
 import {Component} from "react";
-import {withAuth} from "react-oidc-context";
+import {AuthContextProps, withAuth} from "react-oidc-context";
 import ColoredLink from "./coloredLink";
 
 class Navigation extends Component<any, any> {
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            menuOpen: false
+        }
+    }
+
     render() {
         // get the current user
         let auth = this.props?.auth;
+        let user = auth.user
         return (
-            <Navbar color={"dark"}>
+            <Navbar color={"dark"} active={this.state.menuOpen}>
                 <Navbar.Brand>
                     <Navbar.Item>
                         <img src={"/images/logo.svg"} height={28} alt={"App Logo"}/>
                     </Navbar.Item>
+                    <Navbar.Burger onClick={() => this.setState({menuOpen: !this.state.menuOpen})}/>
                 </Navbar.Brand>
-                <Navbar.Menu>
-                    <Navbar.Container>
+                <Navbar.Menu className={"has-background-dark has-text-centered"}>
+                    <Navbar.Container align={"left"}>
+                        <Navbar.Item renderAs={"div"} textAlign={"center"} className={"is-hidden-desktop"}>
+                            <div className="columns is-mobile">
+                                <div className="column is-2">
+                                    <figure className="image m-0 is-flex is-fullwidth">
+                                        <img className="is-rounded is-flex" style={{maxHeight: "fit-content"}} src={auth.user?.profile.picture}/>
+                                    </figure>
+                                </div>
+                                <div className="column">
+                                    <p className="has-text-left has-text-white">
+                                        <span className="has-text-weight-bold has-text-white">{auth.user?.profile.name}</span>
+                                        <span className={"mx-1"}>&ndash;</span>
+                                        {auth.user?.profile.preferred_username}
+                                    </p>
+                                    <Button onClick={auth.signoutRedirect} fullwidth size={"small"} type={"button"} color={"danger"}>Logout</Button>
+                                </div>
+                            </div>
+                            <hr className={"m-0"}/>
+                        </Navbar.Item>
                         <Navbar.Item>
                             <ColoredLink to={'/'}>Home</ColoredLink>
                         </Navbar.Item>
-
+                        <Navbar.Item>
+                            <ColoredLink to={'/cashRegister'}>Kasse</ColoredLink>
+                        </Navbar.Item>
                     </Navbar.Container>
                     <Navbar.Container align={"right"}>
-                        <Navbar.Item>
+                        <Navbar.Item renderAs={"div"} className={"is-hidden-touch"}>
                             <div className={"dropdown is-right is-hoverable"}>
                                 <div className={"dropdown-trigger"}>
                                     <div className={"buttons"}>
@@ -51,7 +81,7 @@ class Navigation extends Component<any, any> {
                     </Navbar.Container>
                 </Navbar.Menu>
             </Navbar>
-        )
+        );
     }
 }
 
