@@ -43,6 +43,6 @@
 		"bulma-list": "^1.2.0",
 		"bulma-prefers-dark": "0.1.0-beta.1",
 		"remixicon": "^3.3.0",
-		"sass": "^1.62.1"
+		"sass": "^1.63.4"
 	}
 }
