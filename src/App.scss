@@ -92,3 +92,5 @@ $mplcBlue-invert: findColorInvert($mplcBlue);
 @import "@creativebulma/bulma-tooltip/src/sass/index.sass";
 // import the remix icon icon pack
 @import "~remixicon/fonts/remixicon.css";
+// import animate.css for bulma toasts
+@import "~animate.css/animate.css";
