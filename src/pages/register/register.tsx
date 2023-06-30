@@ -4,7 +4,7 @@ import axios from "axios";
 import * as bulmaToast from "bulma-toast";
 import {Navigate} from "react-router-dom";
 import {AuthContextProps, withAuth} from "react-oidc-context";
-import {Button, Columns, Heading, Modal} from "react-bulma-components";
+import {Box, Button, Columns, Heading, Modal} from "react-bulma-components";
 import {Icon} from "@iconify/react";
 
 
@@ -280,6 +280,41 @@ class Register extends Component<any, PageState> {
 
             })
     }
+
+    private addCustomBillItem() {
+        let articleName = ""
+        let articlePrice = 0.00
+
+        if (this.customArticleNameInput.current) {
+            if (!this.customArticleNameInput.current || this.customArticleNameInput.current.value === "") {
+                this.customArticleNameInput.current.setCustomValidity("Bitte gebe eine Artikelbezeichnung ein")
+                this.customArticleNameInput.current.reportValidity()
+                return;
+            }
+            articleName = this.customArticleNameInput.current.value.trim()
+            this.customArticleNameInput.current.value = ""
+        }
+
+        if (this.customArticlePriceInput.current) {
+            if (!this.customArticlePriceInput.current.value || this.customArticlePriceInput.current.value === "") {
+                this.customArticlePriceInput.current.setCustomValidity("Bitte gebe einen Preis ein")
+                this.customArticlePriceInput.current.reportValidity()
+                return
+            }
+            articlePrice = Number.parseFloat(this.customArticlePriceInput.current.value)
+            this.customArticlePriceInput.current.value = ""
+        }
+
+        let custArticle: Article = {
+            id: articleName,
+            name: articleName,
+            price: articlePrice,
+            icon: "twemoji:pen"
+        }
+        this.addBillItem(custArticle)
+        this.setState({showingCustomItemInput: false})
+    }
+
     render() {
         console.log(this.state)
         // check for authentication
@@ -301,7 +336,10 @@ class Register extends Component<any, PageState> {
                                 style={{width: "49%"}}>
                             Reservierungen (WIP)
                         </Button>
-                        <Button loading={this.state.callingAPI} color={"info"} rounded onClick={() => {this.reloadStatistics(); this.setState({showingStatistics: true})}}
+                        <Button loading={this.state.callingAPI} color={"info"} rounded onClick={() => {
+                            this.reloadStatistics();
+                            this.setState({showingStatistics: true})
+                        }}
                                 style={{width: "49%"}}>
                             Statistiken
                         </Button>
@@ -327,7 +365,7 @@ class Register extends Component<any, PageState> {
                                 )
                             })
                         }
-                        <Button color={"primary"} rounded textAlign={"center"} className={"is-light"}>
+                        <Button color={"primary"} rounded textAlign={"center"} className={"is-light"} onClick={() => this.setState({showingCustomItemInput: true})}>
                             <span className={"icon-text is-align-items-center"}>
                                 <span className={"icon"}>
                                             <Icon height={48} width={48} icon={"twemoji:pen"}/>
@@ -386,16 +424,18 @@ class Register extends Component<any, PageState> {
                         }
                     </div>
                 </div>
-                <Modal show={this.state.showingStatistics} closeOnEsc={true} closeOnBlur={true} onClose={() => {this.setState({showingStatistics: false})}}>
+                <Modal show={this.state.showingStatistics} closeOnEsc={true} closeOnBlur={true} onClose={() => {
+                    this.setState({showingStatistics: false})
+                }}>
                     <Modal.Content>
                         <div className={"box"}>
                             <Heading textAlign={"center"} size={4}>Verkaufsstatistiken der letzten 24h</Heading>
                             <table className={"table is-fullwidth is-hoverable"}>
                                 <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Anzahl</th>
-                                    </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Anzahl</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 {
@@ -411,6 +451,38 @@ class Register extends Component<any, PageState> {
                                 </tbody>
                             </table>
                         </div>
+                    </Modal.Content>
+                </Modal>
+                <Modal show={this.state.showingCustomItemInput}
+                       closeOnEsc={true} closeOnBlur={true}
+                       onClose={() => {
+                            this.setState({showingCustomItemInput: false})
+                        }}>
+                    <Modal.Content>
+                        <Box>
+                            <Heading textAlign={"center"} size={4}>Benutzerdefinierter Artikel</Heading>
+                            <div className={"field"}>
+                                <label className={"label"}>Artikelbezeichnung</label>
+                                <div className={"control"}>
+                                    <input ref={this.customArticleNameInput} className={"input"} type={"text"} min={6}/>
+                                </div>
+                                <p className="help">Kurze Bezeichnung des Artikels</p>
+                            </div>
+                            <div className={"field"}>
+                                <label className={"label"}>Preis in Euro</label>
+                                <div className={"control is-expanded"}>
+                                    <input ref={this.customArticlePriceInput} className={"input"} type={"number"} min={0}
+                                           step={0.01}/>
+                                </div>
+                                <p className="help">Minimum: 0.00</p>
+                            </div>
+                            <div className={"buttons"}>
+                                <Button rounded color={"success"} className={"is-light"} fullwidth
+                                        onClick={() => this.addCustomBillItem()}>
+                                    Hinzufügen
+                                </Button>
+                            </div>
+                        </Box>
                     </Modal.Content>
                 </Modal>
             </div>
