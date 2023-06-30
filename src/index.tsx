@@ -4,16 +4,29 @@ import BaseApp from "./App";
 import reportWebVitals from './reportWebVitals';
 import {AuthProvider} from "react-oidc-context";
 import {User} from "oidc-client-ts";
-import env from "./env"
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {LoginPage} from "./pages/login/login";
 import {LoginCallback} from "./pages/login/callback";
-import CashRegister from "./pages/cashRegister/cashRegister";
-import {RegisterItem} from "./pages/cashRegister/types";
+import Register from "./pages/register/register";
+import SettingsPage from "./pages/settings/settings";
+import axios from "axios";
+import Navigation from "./components/navbar/navbar";
+
+let oidcAuthority = process.env.REACT_APP_OIDC_AUTHORITY
+let oidcClientId = process.env.REACT_APP_OIDC_CLIENT_ID
+
+
+if (!oidcClientId) {
+    throw new Error("no client id provided")
+}
+
+if (!oidcAuthority) {
+    throw new Error("no authority provided")
+}
 
 const oidcConfig = {
-    authority: env.OIDC_AUTHORITY,
-    client_id: env.OIDC_CLIENT_ID,
+    authority: oidcAuthority,
+    client_id: oidcClientId,
     redirect_uri: window.location.protocol + "//" + window.location.host + "/callback",
     scope: "openid profile email",
     onSigninCallback: (user: User | void) => {
@@ -29,43 +42,38 @@ const oidcConfig = {
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+axios.interceptors.request.use(
+    request => {
+        let localStorageKey = "oidc.user:" + oidcAuthority + ":" + oidcClientId
+        const oidcStorage = sessionStorage.getItem(localStorageKey)
+        if (!oidcStorage) {
+            console.log("no user avaiable. sending unauthenticated request")
+            return request;
+        }
 
-let registerItems: RegisterItem[] = [
-    {
-        name: "Eintritt",
-        icon: "🎟️",
-        price: 3.00,
-        buttonColor: "success"
+        let user = User.fromStorageString(oidcStorage);
+        let token = user?.access_token
+        request.headers["Authorization"] = "Bearer " + token
+        console.log(request)
+        return request;
     },
-    {
-        name: "Double Feature",
-        icon: "🎟️",
-        price: 5.00,
-        buttonColor: "success"
-    },
-    {
-        name: "Popcorn",
-        icon: "🍿",
-        price: 1.00,
-        buttonColor: "warning"
-    },
-    {
-        name: "Getränk",
-        icon: "🍾",
-        price: 1.00,
-        buttonColor: "warning"
+    error => {
+        return Promise.reject(error);
     }
-]
+)
 
 root.render(
     <AuthProvider {...oidcConfig}>
+
         <Router>
-            <Routes>
-                <Route path={"/"} element={<BaseApp />}/>
-                <Route path={"/cashRegister"} element={<CashRegister items={registerItems} />}/>
-                <Route path={"/callback"} element={<LoginCallback />}/>
-                <Route path={"/login"} element={<LoginPage />}/>
-            </Routes>
+            <Navigation/>
+                <Routes>
+                    <Route path={"/"} element={<BaseApp/>}/>
+                    <Route path={"/register"} element={<Register/>}/>
+                    <Route path={"/callback"} element={<LoginCallback/>}/>
+                    <Route path={"/login"} element={<LoginPage/>}/>
+                    <Route path={"/settings"} element={<SettingsPage/>}/>
+                </Routes>
         </Router>
     </AuthProvider>
 );
