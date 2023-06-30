@@ -14,7 +14,7 @@ type RegisterTransaction = {
     Title: string,
     Description: string,
     Amount: number,
-    Articles: Article[]
+    ArticleCounts: any
 }
 
 /**
@@ -57,6 +57,11 @@ type PageState = {
     currentTotal?: number
 
     /**
+     * contains the statistics of every single article sold in the last 24h
+     */
+    itemStatistics?: { articleName: string; count: number; }[]
+
+    /**
      * a boolean used to set the state of the custom article editor visibility
      *
      * @type boolean
@@ -69,6 +74,13 @@ type PageState = {
      * @type boolean
      */
     showingReservationList?: boolean
+
+    /**
+     * a boolean used to set the state of the statistics modal
+     *
+     * @type boolean
+     */
+    showingStatistics?: boolean
 
 }
 

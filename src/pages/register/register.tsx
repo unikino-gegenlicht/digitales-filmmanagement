@@ -2,10 +2,9 @@ import {Component, createRef} from "react";
 import {Article, PageState, RegisterTransaction} from "./types";
 import axios from "axios";
 import * as bulmaToast from "bulma-toast";
-import Transaction from "../../types/transaction";
 import {Navigate} from "react-router-dom";
 import {AuthContextProps, withAuth} from "react-oidc-context";
-import {Button, Columns, Heading} from "react-bulma-components";
+import {Button, Columns, Heading, Modal} from "react-bulma-components";
 import {Icon} from "@iconify/react";
 
 
@@ -190,11 +189,15 @@ class Register extends Component<any, PageState> {
             this.setState({callingAPI: false})
             return
         }
+        let articleCounts: Map<string, number> = new Map<string, number>()
+        billItems.forEach((billItem, pos, billItems) => {
+            articleCounts.set(billItem.name, (billItems.filter((article) => article.name === billItem.name).length))
+        })
+
+        console.log(articleCounts)
+
         // now build a description for the transaction
         let description = ""
-        for (let billItem of billItems) {
-            description += `1x ${billItem.name} á ${billItem.price.toFixed(2)} €\n`
-        }
         description = description.trim()
 
         // now build the actual transaction
@@ -202,8 +205,11 @@ class Register extends Component<any, PageState> {
             Title: `Abendkasse am ${new Date().toLocaleDateString('de-de')} um ${new Date().toLocaleTimeString('de-de')}`,
             Description: description,
             Amount: currentTotal,
-            Articles: billItems
+            ArticleCounts: Object.fromEntries(articleCounts)
+
         }
+        console.log(JSON.stringify(articleCounts))
+        console.log(transaction)
 
         // now send the transaction to the server
         axios.post('/api/register/transactions', transaction)
@@ -248,7 +254,34 @@ class Register extends Component<any, PageState> {
             })
     }
 
+    private reloadStatistics() {
+        axios
+            .get("/api/statistics/sales")
+            .then(res => {
+                switch (res.status) {
+                    case 200:
+                        let response: Object = res.data
+                        let m = new Map<string, number>(Object.entries(response))
+                        let stats = Array.from(m, ([articleName, count]) => ({articleName, count}))
+                        this.setState({itemStatistics: stats})
+                        break
+                }
+            })
+            .catch(err => {
+                bulmaToast.toast({
+                    message: `<p class="has-text-centered"><span class="title is-4">Fehler beim Laden der Verkausstatistiken</span><br/><span class="subtitle is-5">${err}</span><br/></p>`,
+                    type: 'is-warning',
+                    dismissible: false,
+                    position: "top-center",
+                    single: false,
+                    duration: 1500,
+                    animate: {in: 'zoomIn', out: 'zoomOut'},
+                })
+
+            })
+    }
     render() {
+        console.log(this.state)
         // check for authentication
         let auth: AuthContextProps = this.props?.auth
         // let the authentication load
@@ -259,6 +292,7 @@ class Register extends Component<any, PageState> {
         if (!auth.isAuthenticated) {
             return <Navigate to={"/login"}></Navigate>
         }
+
         return (
             <div>
                 <div className={"mt-1 px-1"}>
@@ -267,9 +301,9 @@ class Register extends Component<any, PageState> {
                                 style={{width: "49%"}}>
                             Reservierungen (WIP)
                         </Button>
-                        <Button loading={this.state.callingAPI} color={"info"} rounded disabled
+                        <Button loading={this.state.callingAPI} color={"info"} rounded onClick={() => {this.reloadStatistics(); this.setState({showingStatistics: true})}}
                                 style={{width: "49%"}}>
-                            Statistiken (WIP)
+                            Statistiken
                         </Button>
                     </div>
                     <hr className={"m-1"}/>
@@ -352,12 +386,36 @@ class Register extends Component<any, PageState> {
                         }
                     </div>
                 </div>
-
+                <Modal show={this.state.showingStatistics} closeOnEsc={true} closeOnBlur={true} onClose={() => {this.setState({showingStatistics: false})}}>
+                    <Modal.Content>
+                        <div className={"box"}>
+                            <Heading textAlign={"center"} size={4}>Verkaufsstatistiken der letzten 24h</Heading>
+                            <table className={"table is-fullwidth is-hoverable"}>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Anzahl</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    this.state.itemStatistics?.map(({articleName, count}) => {
+                                        return (
+                                            <tr>
+                                                <th>{articleName}</th>
+                                                <td>{count}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </Modal.Content>
+                </Modal>
             </div>
         )
     }
-
-
 }
 
 export default withAuth(Register);
