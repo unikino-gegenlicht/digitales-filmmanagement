@@ -1,5 +1,4 @@
-import {useAuth} from "react-oidc-context";
-import {Block, Box, Button, Container, Heading, Hero, Progress} from "react-bulma-components";
+import {Block, Container, Heading, Hero, Progress} from "react-bulma-components";
 
 export function LoginCallback() {
     return (
