@@ -70,7 +70,7 @@ type PageState = {
     /**
      * contains the statistics of every single article sold in the last 24h
      */
-    itemStatistics?: ChartData <'bar', ({key: string, value: number | null}) []>
+    itemStatistics?: ChartData <'bar', ({key: string, value: number | null}) []> | null
 
     /**
      * contains an indicator used to check if the available items were pulled from the server

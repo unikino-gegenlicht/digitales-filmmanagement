@@ -208,7 +208,10 @@ class Register extends Component<any, PageState> {
             this.setState({callingAPI: false})
             return
         }
-        let articles: Map<Article, { count: number, price: number }> = new Map<Article, { count: number, price: number }>()
+        let articles: Map<Article, { count: number, price: number }> = new Map<Article, {
+            count: number,
+            price: number
+        }>()
         billItems.forEach((billItem, pos, billItems) => {
             articles.set(billItem, {
                 count: (billItems.filter((article) => article.id === billItem.id).length),
@@ -287,14 +290,14 @@ class Register extends Component<any, PageState> {
             .then(res => {
                 switch (res.status) {
                     case 200:
-                        let rawData: {name: string, count: number}[] = res.data
+                        let rawData: { name: string, count: number }[] = res.data
                         let datasets = rawData.map((datapoint, index, arr) => {
                             let d = []
                             for (let i = 0; i < index; i++) {
                                 d.push({key: arr[i].name, value: null})
                             }
                             d.push({key: datapoint.name, value: datapoint.count})
-                            for (let i = index +1; i < arr.length; i++) {
+                            for (let i = index + 1; i < arr.length; i++) {
                                 d.push({key: arr[i].name, value: null})
                             }
                             return {
@@ -307,20 +310,19 @@ class Register extends Component<any, PageState> {
                                 }
                             }
                         })
-                        let labels = rawData.map((datapoint) => {return datapoint.name})
-                        let counts = rawData.map((datapoint) => {return datapoint.count})
-
-                        let chartJSData: ChartData <'bar', ({key: string, value: number | null}) []>= {
+                        let chartJSData: ChartData<'bar', ({ key: string, value: number | null }) []> = {
                             datasets: datasets
                         }
                         console.log(chartJSData)
                         this.setState({itemStatistics: chartJSData})
                         break
+                    case 204:
+                        this.setState({itemStatistics: null})
                 }
             })
             .catch(err => {
                 bulmaToast.toast({
-                    message: `<p class="has-text-centered"><span class="title is-4">Fehler beim Laden der Verkausstatistiken</span><br/><span class="subtitle is-5">${err}</span><br/></p>`,
+                    message: `<p class="has-text-centered"><span class="title is-4">Fehler beim Laden der Verkaufsstatistiken</span><br/><span class="subtitle is-5">${err}</span><br/></p>`,
                     type: 'is-warning',
                     dismissible: false,
                     position: "top-center",
@@ -368,7 +370,9 @@ class Register extends Component<any, PageState> {
         }
         articleName = articleNameInput.value.trim()
 
-        let articleNameAlreadyPresent = currentArticles.some((a) => {return a.name === articleName})
+        let articleNameAlreadyPresent = currentArticles.some((a) => {
+            return a.name === articleName
+        })
         if (articleNameAlreadyPresent) {
             articleNameInput.setCustomValidity("Artikelname bereits benutzt")
             articleNameInput.reportValidity()
@@ -410,6 +414,7 @@ class Register extends Component<any, PageState> {
     }
 
     private setCurrentRegister(event: React.ChangeEvent<HTMLSelectElement>) {
+
         // get the now selected register
         let selectedRegister = event.target.value
         // now set the state accordingly
@@ -503,12 +508,14 @@ class Register extends Component<any, PageState> {
                         Summe: {this.state.currentTotal?.toFixed(2)} €
                     </Heading>
                     <div className={"buttons is-centered has-addons"}>
-                        <Button loading={this.state.callingAPI} color={"success"} rounded disabled={!this.state.enableRegister}
+                        <Button loading={this.state.callingAPI} color={"success"} rounded
+                                disabled={!this.state.enableRegister}
                                 style={{width: "49%"}}
                                 onClick={() => this.processTransaction()}>
                             Bezahlt
                         </Button>
-                        <Button loading={this.state.callingAPI} color={"warning"} rounded disabled={!this.state.enableRegister}
+                        <Button loading={this.state.callingAPI} color={"warning"} rounded
+                                disabled={!this.state.enableRegister}
                                 style={{width: "49%"}}
                                 onClick={() => this.resetBill()}>
                             Bon löschen
@@ -552,7 +559,7 @@ class Register extends Component<any, PageState> {
                                 Verkaufsstatistiken der letzten 24h
                             </Modal.Card.Title>
                         </Modal.Card.Header>
-                        <Modal.Card.Body>
+                        <Modal.Card.Body textAlign={"center"}>
                             {
                                 ((): ReactNode => {
                                     if (this.state.callingAPI) {
@@ -568,9 +575,19 @@ class Register extends Component<any, PageState> {
                                         />
                                     }
                                     if (!this.state.itemStatistics) {
-                                        return <p>Keine Daten verfügbar</p>
+                                        return <span className={"icon-text"}>
+                                            <span className={"icon"}>
+                                                <Icon icon={"fluent-emoji:warning"} height={"1.25rem"}/>
+                                            </span>
+                                            <span
+                                                className={"is-size-5"}>Keine Daten für die letzten 24h verfügbar</span>
+                                            <span className={"icon"}>
+                                                <Icon icon={"fluent-emoji:warning"} height={"1.25rem"}/>
+                                            </span>
+                                        </span>
                                     }
-                                    return <Bar options={{responsive: true, skipNull: true}} data={this.state.itemStatistics}/>
+                                    return <Bar options={{responsive: true, skipNull: true}}
+                                                data={this.state.itemStatistics}/>
                                 })()
                             }
                         </Modal.Card.Body>
