@@ -546,7 +546,7 @@ class Register extends Component<any, PageState> {
                        }}>
                     <Modal.Content>
                         <Box>
-                            <Heading textAlign={"center"} size={4}>Benutzerdefinierter Artikel</Heading>
+                            <Heading textAlign={"center"} size={4}>Benutzerdefinierten Artikel hinzufügen</Heading>
                             <div className={"field"}>
                                 <label className={"label"}>Artikelbezeichnung</label>
                                 <div className={"control"}>
