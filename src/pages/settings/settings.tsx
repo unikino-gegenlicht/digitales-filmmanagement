@@ -1,5 +1,5 @@
 import {Component} from "react";
-import {Button, Card, Heading, Table, Tabs} from "react-bulma-components";
+import {Block, Button, Card, Heading, Table, Tabs} from "react-bulma-components";
 import {PageState, SettingsPage} from "./types";
 import {TailSpin} from "react-loader-spinner";
 import colors from "../../_colors.module.scss";
@@ -77,6 +77,10 @@ class Settings extends Component<any, PageState> {
         }
     }
 
+    editArticle(article: Article) {
+
+    }
+
     componentDidMount() {
         // download the server side items if it didn't already happen
         if (this.state.serverSideItems === undefined) {
@@ -126,7 +130,6 @@ class Settings extends Component<any, PageState> {
     }
 
     render() {
-        let tableCellStyle = {verticalAlign: "middle"}
         return (
             <div>
                 <Button fullwidth color={"warning"} onClick={() => this.setState({callingAPI: !this.state.callingAPI})}>Simulate
@@ -146,8 +149,8 @@ class Settings extends Component<any, PageState> {
                         Datenbank
                     </Tabs.Tab>
                 </Tabs>
-                <div className={"px-2"}
-                     hidden={!(this.state.currentSettingsPage === SettingsPage.REGISTER)}>
+                <div className={"px-3"} hidden={!(this.state.currentSettingsPage === SettingsPage.REGISTER)}>
+                    <Block>
                     <Card>
                         <Card.Header backgroundColor={"white-ter"}>
                             <Card.Header.Title className={"is-centered"}>
@@ -188,6 +191,7 @@ class Settings extends Component<any, PageState> {
                                     <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th></th>
                                         <th>Bezeichnung</th>
                                         <th>Icon</th>
                                         <th>Preis</th>
@@ -200,41 +204,37 @@ class Settings extends Component<any, PageState> {
                                             console.log("rendering server side article", article)
                                             return (
                                                 <tr>
-                                                    <td style={tableCellStyle}>
-                                                        <span className={"icon-text is-align-items-center"}>
-                                                        <span className={"is-family-code"}>{article.id}</span>
-                                                        <span className={"icon is-small"}>
-                                                            <Icon icon={"material-symbols:circle"} height={16}
-                                                                  color={colors.success}/>
+                                                    <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>
+                                                        <span className={"icon-text"}>
+                                                            <span className={"is-family-code has-tooltip-arrow has-tooltip-right"} data-tooltip={article.id}>
+                                                                <abbr title={article.id}>{article.id.substring(0,4)}</abbr>
+                                                            </span>
                                                         </span>
-                                                            {
-                                                                this.state.deletedArticles?.map((deletedArticle) => {
-                                                                        if (deletedArticle.id === article.id) {
-                                                                            return (
-                                                                                <span className={"icon is-small"}>
-                                                                                    <Icon icon={"material-symbols:circle"} height={16} color={colors.danger}/>
-                                                                                </span>
-                                                                            )
-                                                                        }
-                                                                        return <span></span>;
-                                                                    }
-                                                                )
+                                                    </td>
+                                                    <td style={{textAlign: "center", verticalAlign: "middle", whiteSpace: "nowrap"}}><Icon icon={"material-symbols:circle"} color={colors.success}/>{
+                                                        this.state.deletedArticles?.map((deletedArticle) => {
+                                                                if (deletedArticle.id === article.id) {
+                                                                    return (
+                                                                        <span className={"icon"}>
+                                                                            <Icon icon={"material-symbols:circle"}
+                                                                                  color={colors.danger}/>
+                                                                        </span>
+                                                                    )
+                                                                }
+                                                                return null
                                                             }
-                                                    </span>
-
+                                                        )
+                                                    }
                                                     </td>
-                                                    <td style={tableCellStyle}>{article.name}</td>
-                                                    <td style={tableCellStyle}>
-                                                    <span className={"icon-text is-align-items-center"}>
-                                                        <span className={"is-family-code"}>{article.icon}</span>
-                                                        <span className={"icon is-medium"}>
+                                                    <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>{article.name}</td>
+                                                    <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>
+                                                    <span className={"icon is-large has-tooltip-arrow"} data-tooltip={article.icon}>
                                                             <Icon icon={article.icon} height={48}/>
-                                                        </span>
                                                     </span>
                                                     </td>
-                                                    <td style={tableCellStyle}>{article.price.toFixed(2)} €</td>
-                                                    <td style={tableCellStyle}>
-                                                        <div className={"buttons"}>
+                                                    <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>{article.price.toFixed(2)} €</td>
+                                                    <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>
+                                                        <div className={"buttons is-centered"}>
                                                             <Button color={"info"}>
                                                                 <Icon icon={"material-symbols:edit-sharp"}/>
                                                             </Button>
@@ -272,9 +272,9 @@ class Settings extends Component<any, PageState> {
                                             console.log("rendering local article", article)
                                             return (
                                                 <tr>
-                                                    <td style={tableCellStyle}>{article.id}</td>
-                                                    <td style={tableCellStyle}>{article.name}</td>
-                                                    <td style={tableCellStyle}>
+                                                    <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>{article.id}</td>
+                                                    <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>{article.name}</td>
+                                                    <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>
                                                     <span className={"icon-text is-align-content-center"}>
                                                         <span>{article.icon}</span>
                                                         <span className={"icon is-large"}>
@@ -282,7 +282,7 @@ class Settings extends Component<any, PageState> {
                                                         </span>
                                                     </span>
                                                     </td>
-                                                    <td style={tableCellStyle}>{article.price}</td>
+                                                    <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>{article.price}</td>
                                                 </tr>
                                             )
                                         })
@@ -290,6 +290,43 @@ class Settings extends Component<any, PageState> {
                                     </tbody>
                                 </Table>
                             </div>
+                            <Heading size={6}>Legende</Heading>
+                            <p>
+                                <span className={"icon-text is-align-items-center"}>
+                                    <span className={"icon is-small"}>
+                                        <Icon icon={"material-symbols:circle"} height={16}
+                                              color={colors.success}/>
+                                    </span>
+                                    <span>Artikel auf Server gespeichert</span>
+                                </span>
+                            </p>
+                            <p>
+                                <span className={"icon-text is-align-items-center"}>
+                                    <span className={"icon is-small"}>
+                                        <Icon icon={"material-symbols:circle"} height={16}
+                                              color={colors.danger}/>
+                                    </span>
+                                    <span>Artikel für Löschung markiert</span>
+                                </span>
+                            </p>
+                            <p>
+                                <span className={"icon-text is-align-items-center"}>
+                                    <span className={"icon is-small"}>
+                                        <Icon icon={"material-symbols:circle"} height={16}
+                                              color={colors.info}/>
+                                    </span>
+                                    <span>Neuer Artikel</span>
+                                </span>
+                            </p>
+                            <p>
+                                <span className={"icon-text is-align-items-center"}>
+                                    <span className={"icon is-small"}>
+                                        <Icon icon={"material-symbols:circle"} height={16}
+                                              color={colors.warning}/>
+                                    </span>
+                                    <span>Artikel bearbeitet</span>
+                                </span>
+                            </p>
                         </Card.Content>
                         <Card.Footer alignContent={"end"}>
                             <Card.Footer.Item>
@@ -300,8 +337,19 @@ class Settings extends Component<any, PageState> {
                             </Card.Footer.Item>
                         </Card.Footer>
                     </Card>
+                    </Block>
+                    <Block>
+                        <Card>
+                            <Card.Header backgroundColor={"white-ter"}>
+                                <Card.Header.Title className={"is-centered"}>
+                                    Kassen
+                                </Card.Header.Title>
+                            </Card.Header>
+                        </Card>
+                    </Block>
                 </div>
-            </div>);
+            </div>
+        );
     }
 }
 
