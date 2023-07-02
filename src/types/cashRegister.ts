@@ -1,7 +1,7 @@
 type CashRegister = {
-    ID: string,
-    Name: string,
-    Description?: string
+    id: string,
+    name: string,
+    description?: string
 }
 
 export default CashRegister

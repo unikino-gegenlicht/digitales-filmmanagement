@@ -28,13 +28,18 @@ class Register extends Component<any, PageState> {
 
     constructor(props: any) {
         super(props);
-        this.state = {currentTotal: 0.00}
+        this.state = {
+            currentTotal: 0.00,
+            enableRegister: false,
+            pulledAvailableItems: false,
+            pulledAvailableRegisters: false
+        }
     }
 
     componentDidMount() {
-        if (!this.state.availableRegisters) {
+        if (!this.state.pulledAvailableRegisters) {
             axios
-                .get("/api/register")
+                .get("/api/registers")
                 .then(res => {
                     switch (res.status) {
                         case 200:
@@ -76,9 +81,10 @@ class Register extends Component<any, PageState> {
                         animate: {in: 'zoomIn', out: 'zoomOut'},
                     })
                 })
+                .finally(() => this.setState({pulledAvailableRegisters: true}))
         }
 
-        if (!this.state.availableItems) {
+        if (!this.state.pulledAvailableItems) {
             axios
                 .get("/api/registerItems")
                 .then(res => {
@@ -109,9 +115,11 @@ class Register extends Component<any, PageState> {
                                 duration: 10000,
                                 animate: {in: 'zoomIn', out: 'zoomOut'},
                             })
+
                     }
                 })
                 .catch(reason => {
+                    console.error(reason)
                     bulmaToast.toast({
                         message: `<p class="has-text-centered"><span class="title is-4">Fehler beim Laden der Artikel</span><br/><span class="subtitle is-5">${reason}</span><br/>Es können nur benutzerdefinierte Artikel hinzugefügt werden</p>`,
                         type: 'is-warning',
@@ -121,6 +129,10 @@ class Register extends Component<any, PageState> {
                         duration: 10000,
                         animate: {in: 'zoomIn', out: 'zoomOut'},
                     })
+                    this.setState({availableItems: []})
+                })
+                .finally(() => {
+                    this.setState({pulledAvailableItems: true})
                 })
         }
     }
@@ -212,7 +224,7 @@ class Register extends Component<any, PageState> {
         console.log(transaction)
 
         // now send the transaction to the server
-        axios.post('/api/register/transactions', transaction)
+        axios.post(`/api/register/${this.state.currentRegister}/transactions`, transaction)
             .then(res => {
                 switch (res.status) {
                     case 200:
@@ -315,6 +327,13 @@ class Register extends Component<any, PageState> {
         this.setState({showingCustomItemInput: false})
     }
 
+    private setCurrentRegister(event: React.ChangeEvent<HTMLSelectElement>) {
+        // get the now selected register
+        let selectedRegister = event.target.value
+        // now set the state accordingly
+        this.setState({currentRegister: selectedRegister, enableRegister: true})
+    }
+
     render() {
         console.log(this.state)
         // check for authentication
@@ -344,17 +363,30 @@ class Register extends Component<any, PageState> {
                             Statistiken
                         </Button>
                     </div>
+                    <div className={"select is-rounded is-fullwidth"}>
+                        <select required onChange={(event) => this.setCurrentRegister(event)}>
+                            <option disabled selected>Bitte wähle eine Kasse aus</option>
+                            {
+                                this.state.availableRegisters?.map((register) => {
+                                    return (
+                                        <option value={register.id}>{register.name} - {register.description}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </div>
                     <hr className={"m-1"}/>
                     <Heading size={4} textAlign={"center"} className={"my-2"}>
                         Artikel
                     </Heading>
                     <div className={"buttons is-centered mt-0"}>
                         {
-                            this.state.availableItems?.map((article, idx) => {
+                            this.state.availableItems?.map((article) => {
                                 return (
                                     <Button color={"info"} textAlign={"center"}
                                             className={"is-light is-fullheight is-5"} rounded
-                                            onClick={() => this.addBillItem(article)}>
+                                            onClick={() => this.addBillItem(article)}
+                                            disabled={!this.state.enableRegister}>
                                         <span className={"icon-text is-align-items-center"}>
                                             <span className={"icon"}>
                                                 <Icon icon={article.icon} height={48}/>
@@ -365,7 +397,12 @@ class Register extends Component<any, PageState> {
                                 )
                             })
                         }
-                        <Button color={"primary"} rounded textAlign={"center"} className={"is-light"} onClick={() => this.setState({showingCustomItemInput: true})}>
+                        <Button disabled={!this.state.enableRegister}
+                                color={"primary"}
+                                rounded
+                                textAlign={"center"}
+                                className={"is-light"}
+                                onClick={() => this.setState({showingCustomItemInput: true})}>
                             <span className={"icon-text is-align-items-center"}>
                                 <span className={"icon"}>
                                             <Icon height={48} width={48} icon={"twemoji:pen"}/>
@@ -384,12 +421,12 @@ class Register extends Component<any, PageState> {
                         Summe: {this.state.currentTotal?.toFixed(2)} €
                     </Heading>
                     <div className={"buttons is-centered has-addons"}>
-                        <Button loading={this.state.callingAPI} color={"success"} rounded
+                        <Button loading={this.state.callingAPI} color={"success"} rounded disabled={!this.state.enableRegister}
                                 style={{width: "49%"}}
                                 onClick={() => this.processTransaction()}>
                             Bezahlt
                         </Button>
-                        <Button loading={this.state.callingAPI} color={"warning"} rounded
+                        <Button loading={this.state.callingAPI} color={"warning"} rounded disabled={!this.state.enableRegister}
                                 style={{width: "49%"}}
                                 onClick={() => this.resetBill()}>
                             Bon löschen
@@ -456,8 +493,8 @@ class Register extends Component<any, PageState> {
                 <Modal show={this.state.showingCustomItemInput}
                        closeOnEsc={true} closeOnBlur={true}
                        onClose={() => {
-                            this.setState({showingCustomItemInput: false})
-                        }}>
+                           this.setState({showingCustomItemInput: false})
+                       }}>
                     <Modal.Content>
                         <Box>
                             <Heading textAlign={"center"} size={4}>Benutzerdefinierter Artikel</Heading>
@@ -471,7 +508,8 @@ class Register extends Component<any, PageState> {
                             <div className={"field"}>
                                 <label className={"label"}>Preis in Euro</label>
                                 <div className={"control is-expanded"}>
-                                    <input ref={this.customArticlePriceInput} className={"input"} type={"number"} min={0}
+                                    <input ref={this.customArticlePriceInput} className={"input"} type={"number"}
+                                           min={0}
                                            step={0.01}/>
                                 </div>
                                 <p className="help">Minimum: 0.00</p>
