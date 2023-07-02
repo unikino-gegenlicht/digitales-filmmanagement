@@ -1,14 +1,8 @@
 @import "~bulma/sass/utilities/functions.sass";
+@import "_colors.module.scss";
 // Overwrite the default primary color of bulma with the corporate design
 // yellow
-$gglYellow: #ffdd00;
-$primary: $gglYellow;
 
-/* Other brand colors */
-
-// MPLC Deutschland GmbH
-$mplcBlue: #096587;
-$mplcBlue-invert: findColorInvert($mplcBlue);
 
 // Create a image format which is applied to images displaying movie posters
 .image.is-movie-poster,
@@ -94,3 +88,4 @@ $mplcBlue-invert: findColorInvert($mplcBlue);
 @import "~remixicon/fonts/remixicon.css";
 // import animate.css for bulma toasts
 @import "~animate.css/animate.css";
+

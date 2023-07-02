@@ -1,0 +1,12 @@
+$gglYellow: #ffdd00;
+$primary: $gglYellow;
+
+/* Other brand colors */
+
+// MPLC Deutschland GmbH
+$mplcBlue: #096587;
+$mplcBlue-invert: findColorInvert($mplcBlue);
+
+:export {
+  primary: $primary;
+}

@@ -1,4 +1,5 @@
 import CashRegister from "../../types/cashRegister";
+import {ChartData} from "chart.js";
 
 /**
  * Article represents a single sellable article pulled from the api
@@ -69,7 +70,7 @@ type PageState = {
     /**
      * contains the statistics of every single article sold in the last 24h
      */
-    itemStatistics?: { articleName: string; count: number; }[]
+    itemStatistics?: ChartData <'bar', ({key: string, value: number | null}) []>
 
     /**
      * contains an indicator used to check if the available items were pulled from the server

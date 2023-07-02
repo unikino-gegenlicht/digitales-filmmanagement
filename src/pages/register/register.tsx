@@ -1,4 +1,4 @@
-import {Component, createRef} from "react";
+import {Component, createRef, ReactNode} from "react";
 import {Article, PageState, RegisterTransaction} from "./types";
 import axios from "axios";
 import * as bulmaToast from "bulma-toast";
@@ -7,7 +7,12 @@ import {AuthContextProps, withAuth} from "react-oidc-context";
 import {Box, Button, Columns, Heading, Modal} from "react-bulma-components";
 import {Icon} from "@iconify/react";
 import {v4 as uuid} from "uuid";
-
+import {Bar} from "react-chartjs-2";
+import {Chart as ChartJS, ChartData, registerables} from 'chart.js';
+import {generate} from 'patternomaly';
+import stc from 'string-to-color';
+import {TailSpin} from "react-loader-spinner";
+import colors from "../../_colors.module.scss"
 
 class Register extends Component<any, PageState> {
 
@@ -35,6 +40,7 @@ class Register extends Component<any, PageState> {
             pulledAvailableItems: false,
             pulledAvailableRegisters: false
         }
+        ChartJS.register(...registerables);
     }
 
     componentDidMount() {
@@ -275,15 +281,40 @@ class Register extends Component<any, PageState> {
     }
 
     private reloadStatistics() {
+        this.setState({callingAPI: true})
         axios
-            .get("/api/statistics/sales")
+            .get("/api/statistics/items")
             .then(res => {
                 switch (res.status) {
                     case 200:
-                        let response: Object = res.data
-                        let m = new Map<string, number>(Object.entries(response))
-                        let stats = Array.from(m, ([articleName, count]) => ({articleName, count}))
-                        this.setState({itemStatistics: stats})
+                        let rawData: {name: string, count: number}[] = res.data
+                        let datasets = rawData.map((datapoint, index, arr) => {
+                            let d = []
+                            for (let i = 0; i < index; i++) {
+                                d.push({key: arr[i].name, value: null})
+                            }
+                            d.push({key: datapoint.name, value: datapoint.count})
+                            for (let i = index +1; i < arr.length; i++) {
+                                d.push({key: arr[i].name, value: null})
+                            }
+                            return {
+                                label: datapoint.name,
+                                data: d,
+                                backgroundColor: generate([stc(datapoint.name)]),
+                                parsing: {
+                                    xAxisKey: 'key',
+                                    yAxisKey: 'value'
+                                }
+                            }
+                        })
+                        let labels = rawData.map((datapoint) => {return datapoint.name})
+                        let counts = rawData.map((datapoint) => {return datapoint.count})
+
+                        let chartJSData: ChartData <'bar', ({key: string, value: number | null}) []>= {
+                            datasets: datasets
+                        }
+                        console.log(chartJSData)
+                        this.setState({itemStatistics: chartJSData})
                         break
                 }
             })
@@ -297,7 +328,9 @@ class Register extends Component<any, PageState> {
                     duration: 1500,
                     animate: {in: 'zoomIn', out: 'zoomOut'},
                 })
-
+            })
+            .finally(() => {
+                this.setState({callingAPI: false})
             })
     }
 
@@ -513,31 +546,35 @@ class Register extends Component<any, PageState> {
                 <Modal show={this.state.showingStatistics} closeOnEsc={true} closeOnBlur={true} onClose={() => {
                     this.setState({showingStatistics: false})
                 }}>
-                    <Modal.Content>
-                        <div className={"box"}>
-                            <Heading textAlign={"center"} size={4}>Verkaufsstatistiken der letzten 24h</Heading>
-                            <table className={"table is-fullwidth is-hoverable"}>
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Anzahl</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    this.state.itemStatistics?.map(({articleName, count}) => {
-                                        return (
-                                            <tr>
-                                                <th>{articleName}</th>
-                                                <td>{count}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-                    </Modal.Content>
+                    <Modal.Card>
+                        <Modal.Card.Header>
+                            <Modal.Card.Title textAlign={"center"}>
+                                Verkaufsstatistiken der letzten 24h
+                            </Modal.Card.Title>
+                        </Modal.Card.Header>
+                        <Modal.Card.Body>
+                            {
+                                ((): ReactNode => {
+                                    if (this.state.callingAPI) {
+                                        return <TailSpin
+                                            height="80"
+                                            width="80"
+                                            ariaLabel="tail-spin-loading"
+                                            radius="1"
+                                            color={colors.primary}
+                                            wrapperStyle={{}}
+                                            wrapperClass="is-justify-content-center"
+                                            visible={this.state.callingAPI}
+                                        />
+                                    }
+                                    if (!this.state.itemStatistics) {
+                                        return <p>Keine Daten verfügbar</p>
+                                    }
+                                    return <Bar options={{responsive: true, skipNull: true}} data={this.state.itemStatistics}/>
+                                })()
+                            }
+                        </Modal.Card.Body>
+                    </Modal.Card>
                 </Modal>
                 <Modal show={this.state.showingCustomItemInput}
                        closeOnEsc={true} closeOnBlur={true}
