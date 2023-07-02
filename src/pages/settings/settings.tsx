@@ -6,6 +6,7 @@ import colors from "../../_colors.module.scss";
 import axios from "axios";
 import * as bulmaToast from "bulma-toast";
 import {Icon} from "@iconify/react";
+import {Article} from "../register/types";
 
 class Settings extends Component<any, PageState> {
 
@@ -15,6 +16,64 @@ class Settings extends Component<any, PageState> {
             // FIXME: used to build loaders first
             callingAPI: true,
             currentSettingsPage: SettingsPage.REGISTER,
+        }
+    }
+
+    deleteServerSideArticle(article: Article) {
+        console.log("trying to remove article", article)
+        // get the list of to be deleted articles
+        let currentItemList = this.state.serverSideItems
+        let deletedItemList = this.state.deletedArticles
+        if (!currentItemList) {
+            console.log("unable to remove item from empty list")
+            return
+        }
+        let itemInCurrentList = currentItemList.some((currentArticle) => currentArticle.id === article.id)
+        if (!itemInCurrentList) {
+            console.warn("unable to remove item from server which is not stored there")
+            return;
+        }
+        if (!deletedItemList) {
+            deletedItemList = []
+        }
+        let itemAlreadyInDeleteList = deletedItemList.some((deletedArticle) => deletedArticle.id === article.id)
+        if (itemAlreadyInDeleteList) {
+            console.warn("can't delete article twice")
+            return;
+        }
+        deletedItemList.push(article)
+        this.setState({deletedArticles: deletedItemList})
+    }
+
+    restoreServerSideArticle(article: Article) {
+        console.log("trying to remove article", article)
+        // get the list of to be deleted articles
+        let currentItemList = this.state.serverSideItems
+        let deletedItemList = this.state.deletedArticles
+        if (!currentItemList) {
+            console.log("unable to remove item from empty list")
+            return
+        }
+        let itemInCurrentList = currentItemList.some((currentArticle) => currentArticle.id === article.id)
+        if (!itemInCurrentList) {
+            console.warn("unable to restore item from server which is not stored there")
+            return;
+        }
+        if (!deletedItemList) {
+            deletedItemList = []
+        }
+        let itemAlreadyInDeleteList = deletedItemList.some((deletedArticle) => deletedArticle.id === article.id)
+        if (itemAlreadyInDeleteList) {
+            let idx = -1
+            for (let i = 0; i < deletedItemList.length; i++) {
+                if (article.id === deletedItemList[i].id) {
+                    idx = i
+                }
+            }
+            if (idx !== -1) {
+                deletedItemList.splice(idx, 1)
+                this.setState({deletedArticles: deletedItemList})
+            }
         }
     }
 
@@ -143,20 +202,26 @@ class Settings extends Component<any, PageState> {
                                                 <tr>
                                                     <td style={tableCellStyle}>
                                                         <span className={"icon-text is-align-items-center"}>
-                                                        <span>{article.id}</span>
+                                                        <span className={"is-family-code"}>{article.id}</span>
                                                         <span className={"icon is-small"}>
-                                                            <Icon icon={"material-symbols:circle"} height={16} color={colors.success}/>
+                                                            <Icon icon={"material-symbols:circle"} height={16}
+                                                                  color={colors.success}/>
                                                         </span>
-                                                    </span>
-                                                        {
-                                                            this.state.deletedArticles?.map((deletedArticle) => {
-                                                                    if (deletedArticle.id === article.id) {
-                                                                        return <Icon icon={"material-symbols:circle"} height={16} color={colors.danger}/>
+                                                            {
+                                                                this.state.deletedArticles?.map((deletedArticle) => {
+                                                                        if (deletedArticle.id === article.id) {
+                                                                            return (
+                                                                                <span className={"icon is-small"}>
+                                                                                    <Icon icon={"material-symbols:circle"} height={16} color={colors.danger}/>
+                                                                                </span>
+                                                                            )
+                                                                        }
+                                                                        return <span></span>;
                                                                     }
-                                                                    return <span></span>;
-                                                                }
-                                                            )
-                                                        }
+                                                                )
+                                                            }
+                                                    </span>
+
                                                     </td>
                                                     <td style={tableCellStyle}>{article.name}</td>
                                                     <td style={tableCellStyle}>
@@ -173,9 +238,29 @@ class Settings extends Component<any, PageState> {
                                                             <Button color={"info"}>
                                                                 <Icon icon={"material-symbols:edit-sharp"}/>
                                                             </Button>
-                                                            <Button color={"danger"}>
-                                                                <Icon icon={"material-symbols:delete-sharp"}/>
-                                                            </Button>
+                                                            {
+                                                                (() => {
+                                                                    if (!this.state.deletedArticles) {
+                                                                        console.log("no deleted articles yet")
+                                                                        return <Button
+                                                                            onClick={() => this.deleteServerSideArticle(article)}
+                                                                            color={"danger"}><Icon
+                                                                            icon={"material-symbols:delete"}/></Button>
+                                                                    }
+                                                                    if (this.state.deletedArticles.some((a) => a.id === article.id)) {
+                                                                        console.log("found deleted article", article)
+                                                                        return <Button
+                                                                            onClick={() => this.restoreServerSideArticle(article)}
+                                                                            color={"warning"}><Icon
+                                                                            icon={"material-symbols:undo"}/></Button>
+                                                                    } else {
+                                                                        return <Button
+                                                                            onClick={() => this.deleteServerSideArticle(article)}
+                                                                            color={"danger"}><Icon
+                                                                            icon={"material-symbols:delete"}/></Button>
+                                                                    }
+                                                                })()
+                                                            }
                                                         </div>
                                                     </td>
                                                 </tr>
