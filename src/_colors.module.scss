@@ -9,4 +9,6 @@ $mplcBlue-invert: findColorInvert($mplcBlue);
 
 :export {
   primary: $primary;
+  success: hsl(153, 53%, 53%);
+  danger: hsl(348, 86%, 61%);
 }

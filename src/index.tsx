@@ -54,7 +54,6 @@ axios.interceptors.request.use(
         let user = User.fromStorageString(oidcStorage);
         let token = user?.access_token
         request.headers["Authorization"] = "Bearer " + token
-        console.log(request)
         return request;
     },
     error => {
