@@ -1,14 +1,19 @@
-import {Component} from "react";
-import {Block, Button, Card, Heading, Table, Tabs} from "react-bulma-components";
+import {Component, createRef} from "react";
+import {Block, Button, Card, Heading, Modal, Table, Tabs} from "react-bulma-components";
 import {PageState, SettingsPage} from "./types";
 import {TailSpin} from "react-loader-spinner";
 import colors from "../../_colors.module.scss";
 import axios from "axios";
 import * as bulmaToast from "bulma-toast";
-import {Icon} from "@iconify/react";
+import {Icon, IconifyIcon} from "@iconify/react";
 import {Article} from "../register/types";
 
 class Settings extends Component<any, PageState> {
+
+    private inputEditItemName: React.RefObject<HTMLInputElement> = createRef()
+    private inputEditItemPrice: React.RefObject<HTMLInputElement> = createRef()
+    private inputEditItemIcon: React.RefObject<HTMLInputElement> = createRef()
+    private editItemIconPreview: React.RefObject<IconifyIcon> = createRef()
 
     constructor(props: any) {
         super(props);
@@ -78,7 +83,47 @@ class Settings extends Component<any, PageState> {
     }
 
     editArticle(article: Article) {
+        this.setState({currentlyEditedArticle: article, showArticleEditPopup: true})
+    }
 
+    saveEditedArticle() {
+        let articleNameInput = this.inputEditItemName.current
+        let articlePriceInput = this.inputEditItemPrice.current
+        let articleIconInput = this.inputEditItemIcon.current
+        let currentlyEditedArticle = this.state.currentlyEditedArticle
+        if (!currentlyEditedArticle) {
+            console.error("no currently edited article")
+            return
+        }
+        if (articleNameInput) {
+            currentlyEditedArticle.name = articleNameInput.value
+        }
+        if (articlePriceInput) {
+            if (Number.isNaN(Number.parseFloat(articlePriceInput.value))) {
+                articlePriceInput.setCustomValidity("Das ist keine Zahl")
+                articlePriceInput.reportValidity()
+                return;
+            }
+            currentlyEditedArticle.price = Number.parseFloat(articlePriceInput.value)
+        }
+        if (articleIconInput) {
+            currentlyEditedArticle.icon = articleIconInput.value
+        }
+        let editedArticles = this.state.editedArticles
+        if (!editedArticles) {
+            editedArticles = []
+        }
+        editedArticles.push(currentlyEditedArticle)
+        this.setState({showArticleEditPopup: false, currentlyEditedArticle: undefined, editedArticles: editedArticles})
+    }
+
+    handleUpdatedIcon(event: React.ChangeEvent<HTMLInputElement>) {
+        let newIconName = event.target.value
+        let currentEditedArticle = this.state.currentlyEditedArticle
+        if (currentEditedArticle) {
+            currentEditedArticle.icon = newIconName
+        }
+        this.setState({currentlyEditedArticle: currentEditedArticle})
     }
 
     componentDidMount() {
@@ -207,7 +252,7 @@ class Settings extends Component<any, PageState> {
                                                     <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>
                                                         <span className={"icon-text"}>
                                                             <span className={"is-family-code has-tooltip-arrow has-tooltip-right"} data-tooltip={article.id}>
-                                                                <abbr title={article.id}>{article.id.substring(0,4)}</abbr>
+                                                                {article.id.substring(0,4)}
                                                             </span>
                                                         </span>
                                                     </td>
@@ -235,7 +280,7 @@ class Settings extends Component<any, PageState> {
                                                     <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>{article.price.toFixed(2)} €</td>
                                                     <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>
                                                         <div className={"buttons is-centered"}>
-                                                            <Button color={"info"}>
+                                                            <Button color={"info"} onClick={() => this.editArticle(article)}>
                                                                 <Icon icon={"material-symbols:edit-sharp"}/>
                                                             </Button>
                                                             {
@@ -348,6 +393,48 @@ class Settings extends Component<any, PageState> {
                         </Card>
                     </Block>
                 </div>
+                <Modal show={this.state.showArticleEditPopup} closeOnBlur={true} closeOnEsc={true} onClose={() => this.saveEditedArticle()}>
+                    <Modal.Card>
+                        <Modal.Card.Header>
+                            <Modal.Card.Title textAlign={"center"}>
+                                Artikel bearbeiten
+                            </Modal.Card.Title>
+                        </Modal.Card.Header>
+                        <Modal.Card.Body>
+                            <div className={"field"}>
+                                <label className={"label"}>Bezeichnung</label>
+                                <div className={"control"}>
+                                    <input ref={this.inputEditItemName} className={"input"} type={"text"} defaultValue={this.state.currentlyEditedArticle?.name}/>
+                                </div>
+                            </div>
+                            <div className={"field"}>
+                                <label className={"label"}>Preis</label>
+                                <p className={"control has-icons-right"}>
+                                    <input ref={this.inputEditItemPrice} className={"input"} type={"number"} step={0.01} min={0.00} defaultValue={this.state.currentlyEditedArticle?.price.toFixed(2)}/>
+                                    <span className={"icon is-small is-right"}>
+                                        <Icon icon={"ic:outline-euro"}/>
+                                    </span>
+                                </p>
+                            </div>
+                            <div className={"field"}>
+                                <label className={"label"}>Icon</label>
+                                <div className={"control"}>
+                                    <input ref={this.inputEditItemIcon} className={"input"} type={"text"} defaultValue={this.state.currentlyEditedArticle?.icon} onChange={(event) => this.handleUpdatedIcon(event)}/>
+                                </div>
+                            </div>
+                            <div className={"field"}>
+                                <label className={"label"}>Vorschau des Icons</label>
+                                <div className={"control has-text-centered"}>
+                                    <Icon icon={(this.state.currentlyEditedArticle ? this.state.currentlyEditedArticle.icon : "")} height={128}/>
+                                </div>
+                            </div>
+                        </Modal.Card.Body>
+                        <Modal.Card.Footer renderAs={Button.Group} align={"right"}>
+                            <Button color={"warning"} onClick={() => this.setState({currentlyEditedArticle: undefined, showArticleEditPopup: false})}>Abbrechen</Button>
+                            <Button color={"success"} onClick={() => this.saveEditedArticle()}>Speichern</Button>
+                        </Modal.Card.Footer>
+                    </Modal.Card>
+                </Modal>
             </div>
         );
     }
