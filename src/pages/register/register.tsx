@@ -6,6 +6,7 @@ import {Navigate} from "react-router-dom";
 import {AuthContextProps, withAuth} from "react-oidc-context";
 import {Box, Button, Columns, Heading, Modal} from "react-bulma-components";
 import {Icon} from "@iconify/react";
+import {v4 as uuid} from "uuid";
 
 
 class Register extends Component<any, PageState> {
@@ -201,16 +202,26 @@ class Register extends Component<any, PageState> {
             this.setState({callingAPI: false})
             return
         }
-        let articleCounts: Map<string, number> = new Map<string, number>()
+        let articles: Map<Article, { count: number, price: number }> = new Map<Article, { count: number, price: number }>()
         billItems.forEach((billItem, pos, billItems) => {
-            articleCounts.set(billItem.name, (billItems.filter((article) => article.name === billItem.name).length))
+            articles.set(billItem, {
+                count: (billItems.filter((article) => article.id === billItem.id).length),
+                price: billItem.price
+            })
         })
-
-        console.log(articleCounts)
 
         // now build a description for the transaction
         let description = ""
+        articles.forEach((countAndPrice, article) => {
+            description += `${countAndPrice.count}x ${article.name} á ${countAndPrice.price.toFixed(2)} €\n`
+        })
         description = description.trim()
+
+        // now build the statistics object by checking the names
+        let articleCounts: Map<string, number> = new Map<string, number>()
+        articles.forEach((countAndPrice, article) => {
+            articleCounts.set(article.name, countAndPrice.count)
+        })
 
         // now build the actual transaction
         let transaction: RegisterTransaction = {
@@ -220,11 +231,8 @@ class Register extends Component<any, PageState> {
             ArticleCounts: Object.fromEntries(articleCounts)
 
         }
-        console.log(JSON.stringify(articleCounts))
-        console.log(transaction)
-
         // now send the transaction to the server
-        axios.post(`/api/register/${this.state.currentRegister}/transactions`, transaction)
+        axios.post(`/api/registers/${this.state.currentRegister}/transactions`, transaction)
             .then(res => {
                 switch (res.status) {
                     case 200:
@@ -294,37 +302,78 @@ class Register extends Component<any, PageState> {
     }
 
     private addCustomBillItem() {
-        let articleName = ""
-        let articlePrice = 0.00
-
-        if (this.customArticleNameInput.current) {
-            if (!this.customArticleNameInput.current || this.customArticleNameInput.current.value === "") {
-                this.customArticleNameInput.current.setCustomValidity("Bitte gebe eine Artikelbezeichnung ein")
-                this.customArticleNameInput.current.reportValidity()
-                return;
-            }
-            articleName = this.customArticleNameInput.current.value.trim()
-            this.customArticleNameInput.current.value = ""
+        // get the current list of items
+        let currentArticles = this.state.availableItems
+        // now check if the list is initialized
+        if (!currentArticles) {
+            currentArticles = []
         }
 
-        if (this.customArticlePriceInput.current) {
-            if (!this.customArticlePriceInput.current.value || this.customArticlePriceInput.current.value === "") {
-                this.customArticlePriceInput.current.setCustomValidity("Bitte gebe einen Preis ein")
-                this.customArticlePriceInput.current.reportValidity()
-                return
-            }
-            articlePrice = Number.parseFloat(this.customArticlePriceInput.current.value)
-            this.customArticlePriceInput.current.value = ""
+        // now define the article name and price to write them later
+        let articleName: string
+        let articlePrice: number
+
+        // now check if the name input reference has a current element set
+        if (!this.customArticleNameInput.current) {
+            console.error("no article name input referenced")
+            throw new Error("no article name input referenced")
+        }
+        let articleNameInput = this.customArticleNameInput.current
+
+        // now check if the name input reference has a current element set
+        if (!this.customArticlePriceInput.current) {
+            console.error("no article price input referenced")
+            throw new Error("no article price input referenced")
+        }
+        let articlePriceInput = this.customArticlePriceInput.current
+
+        // now check if the article name is empty or a string only containing whitespaces
+        if (articleNameInput.value.trim() === "") {
+            articleNameInput.setCustomValidity("Artikelname erforderlich")
+            articleNameInput.reportValidity()
+            return;
+        }
+        articleName = articleNameInput.value.trim()
+
+        let articleNameAlreadyPresent = currentArticles.some((a) => {return a.name === articleName})
+        if (articleNameAlreadyPresent) {
+            articleNameInput.setCustomValidity("Artikelname bereits benutzt")
+            articleNameInput.reportValidity()
+            return;
         }
 
-        let custArticle: Article = {
-            id: articleName,
+        // now check if the article price is empty or a string only containing whitespaces
+        if (articlePriceInput.value.trim() === "") {
+            articlePriceInput.setCustomValidity("Preis erforderlich")
+            articlePriceInput.reportValidity()
+            return;
+        }
+
+        // now try to parse the price
+        articlePrice = Number.parseFloat(articlePriceInput.value.trim())
+        if (Number.isNaN(articlePrice)) {
+            articlePriceInput.setCustomValidity("Ungültiger Wert eingegeben")
+            articlePriceInput.reportValidity()
+            return;
+        }
+
+        // now build the custom article
+        let article: Article = {
+            id: uuid(),
             name: articleName,
             price: articlePrice,
             icon: "twemoji:pen"
         }
-        this.addBillItem(custArticle)
-        this.setState({showingCustomItemInput: false})
+
+        // add the item and hide the popup
+        currentArticles.push(article)
+        this.setState({availableItems: currentArticles, showingCustomItemInput: false})
+
+        // now clear the input fields values
+        articleNameInput.value = ""
+        articlePriceInput.value = ""
+
+
     }
 
     private setCurrentRegister(event: React.ChangeEvent<HTMLSelectElement>) {
