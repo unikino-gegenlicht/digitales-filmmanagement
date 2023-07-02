@@ -1,7 +1,6 @@
 import {Component} from "react";
 import Navbar from "../../components/navbar/navbar";
 import {Card} from "react-bulma-components";
-import axios from "axios";
 
 class SettingsPage extends Component<any, any> {
 

@@ -50,6 +50,11 @@ type PageState = {
     callingAPI?: boolean
 
     /**
+     *
+     */
+    currentRegister?: string
+
+    /**
      * contains the current total of all bill items
      *
      * @type number
@@ -57,9 +62,24 @@ type PageState = {
     currentTotal?: number
 
     /**
+     * indicator if the buttons of the register shall be enabled or not
+     */
+    enableRegister: boolean
+
+    /**
      * contains the statistics of every single article sold in the last 24h
      */
     itemStatistics?: { articleName: string; count: number; }[]
+
+    /**
+     * contains an indicator used to check if the available items were pulled from the server
+     */
+    pulledAvailableItems: boolean
+
+    /**
+     * contains an indicator used to check if the available items were pulled from the server
+     */
+    pulledAvailableRegisters: boolean
 
     /**
      * a boolean used to set the state of the custom article editor visibility
