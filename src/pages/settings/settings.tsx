@@ -113,6 +113,15 @@ class Settings extends Component<any, PageState> {
         if (!editedArticles) {
             editedArticles = []
         }
+        let articleAlreadyEdited = editedArticles.some(
+            (editedArticle) => editedArticle.id === currentlyEditedArticle?.id
+        )
+        if (articleAlreadyEdited) {
+            let idx = editedArticles.findIndex((article) => {
+                return article.id === currentlyEditedArticle?.id
+            })
+            editedArticles.splice(idx, 1)
+        }
         editedArticles.push(currentlyEditedArticle)
         this.setState({showArticleEditPopup: false, currentlyEditedArticle: undefined, editedArticles: editedArticles})
     }
@@ -256,7 +265,8 @@ class Settings extends Component<any, PageState> {
                                                             </span>
                                                         </span>
                                                     </td>
-                                                    <td style={{textAlign: "center", verticalAlign: "middle", whiteSpace: "nowrap"}}><Icon icon={"material-symbols:circle"} color={colors.success}/>{
+                                                    <td style={{textAlign: "center", verticalAlign: "middle", whiteSpace: "nowrap"}}><Icon icon={"material-symbols:circle"} color={colors.success}/>
+                                                        {
                                                         this.state.deletedArticles?.map((deletedArticle) => {
                                                                 if (deletedArticle.id === article.id) {
                                                                     return (
@@ -270,6 +280,20 @@ class Settings extends Component<any, PageState> {
                                                             }
                                                         )
                                                     }
+                                                        {
+                                                            this.state.editedArticles?.map((editedArticle) => {
+                                                                    if (editedArticle.id === article.id) {
+                                                                        return (
+                                                                            <span className={"icon"}>
+                                                                            <Icon icon={"material-symbols:circle"}
+                                                                                  color={colors.warning}/>
+                                                                        </span>
+                                                                        )
+                                                                    }
+                                                                    return null
+                                                                }
+                                                            )
+                                                        }
                                                     </td>
                                                     <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>{article.name}</td>
                                                     <td style={{verticalAlign: "middle", whiteSpace: "nowrap"}}>
